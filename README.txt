@@ -27,9 +27,6 @@ Build Environment: OS X
 
 Recommended version:  OS X 10.6 (Snow Leopard)
 
-Xcode 3.2.x (available at https://developer.apple.com/downloads -- Apple ID
-required)
-
 CMake should be installed somewhere in the PATH.  The version in MacPorts
 (http://www.MacPorts.org) works, or just install the CMake application from
 the DMG (http://www.cmake.org) and sym link
