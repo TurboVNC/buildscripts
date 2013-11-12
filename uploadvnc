@@ -4,8 +4,13 @@ set -u
 set -e
 
 if [ $# -lt 1 ]; then
-	echo USAGE: $0 \<SourceForge user name\>
+	echo USAGE: $0 \<SourceForge user name\> [tag]
 	exit -1
+fi
+
+TAG=
+if [ $# -gt 1 ]; then
+	TAG=.$2
 fi
 
 BUILDDIR=$HOME/src/vnc.nightly/latest/files
@@ -20,8 +25,8 @@ fi
 echo Uploading build ...
 chmod 644 $BUILDDIR/*
 ssh $SSHSERVER create
-ssh $SSHSERVER mkdir $PROJWEB/vnc.nightly || true
-ssh $SSHSERVER rm $PROJWEB/vnc.nightly/* || true
-scp $BUILDDIR/* $SSHSERVER:$PROJWEB/vnc.nightly
+ssh $SSHSERVER mkdir $PROJWEB/vnc.nightly$TAG || true
+ssh $SSHSERVER rm $PROJWEB/vnc.nightly$TAG/* || true
+scp $BUILDDIR/* $SSHSERVER:$PROJWEB/vnc.nightly$TAG
 
 exit 0
