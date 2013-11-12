@@ -22,6 +22,9 @@ mkdir osx
 pushd osx
 cmake -G"Unix Makefiles" ..
 make dmg
+if [ -f ../release/Info-compat.plist.in ]; then
+	make compatdmg
+fi
 mv TurboVNC-[0-9]*.dmg $OUTDIR/files/
 popd
 

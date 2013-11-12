@@ -25,7 +25,7 @@ Or, you could just create sym links from gcc4 -> gcc and g++4 -> g++.
 Build Environment: OS X
 -----------------------
 
-Recommended version:  OS X 10.6 (Snow Leopard)
+OS X 10.6 (Snow Leopard) or later required
 
 CMake should be installed somewhere in the PATH.  The version in MacPorts
 (http://www.MacPorts.org) works, or just install the CMake application from
