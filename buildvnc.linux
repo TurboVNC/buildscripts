@@ -25,7 +25,7 @@ mkdir -p rpmbuild/BUILD
 mkdir -p rpmbuild/SRPMS
 mkdir -p rpmbuild/buildroot
 export CC=gcc4
-export CFLAGS='-I /usr/lib/x86_64-redhat-linux3E/include -B /usr/lib/x86_64-redhat-linux3E/lib64/'
+export CFLAGS=
 export LDFLAGS=
 rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot \
 	--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm
@@ -33,7 +33,7 @@ VERSION=`rpm -q -p rpmbuild/RPMS/x86_64/turbovnc-[0-9]*.x86_64.rpm | cut -f2 -d-
 mv rpmbuild/RPMS/x86_64/turbovnc-[0-9]*.x86_64.rpm $OUTDIR/files/turbovnc-$VERSION.x86_64.rpm
 mv rpmbuild/RPMS/x86_64/turbovnc-debuginfo-[0-9]*.x86_64.rpm $OUTDIR/files/turbovnc-debuginfo-$VERSION.x86_64.rpm
 
-export CFLAGS='-I /usr/lib/x86_64-redhat-linux3E/include -B /usr/lib/i386-redhat-linux3E/lib/ -m32'
+export CFLAGS='-m32'
 export LDFLAGS='-m32'
 rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --target i386 \
 	--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm
@@ -48,7 +48,7 @@ pushd turbovnc-[0-9]*
 mkdir linux64 linux
 
 pushd linux64
-export CFLAGS='-I /usr/lib/x86_64-redhat-linux3E/include -B /usr/lib/x86_64-redhat-linux3E/lib64/'
+export CFLAGS=
 export LDFLAGS=
 cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DCMAKE_VERBOSE_MAKEFILE=1 ..
 make
@@ -60,7 +60,7 @@ mv turbovnc_[0-9]*_amd64.deb $OUTDIR/files/
 popd
 
 pushd linux
-export CFLAGS='-I /usr/lib/x86_64-redhat-linux3E/include -B /usr/lib/i386-redhat-linux3E/lib/ -m32'
+export CFLAGS='-m32'
 export LDFLAGS='-m32'
 cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DCMAKE_VERBOSE_MAKEFILE=1 ..
 make
