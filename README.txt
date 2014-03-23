@@ -3,7 +3,7 @@ DRC's TurboVNC Build Scripts
 
 These scripts are used to build the "official" TurboVNC binaries, which work
 on any Linux platform with GLIB 2.3.4 and later, as well as Windows XP and
-later and OS X 10.4 and later.
+later and OS X 10.5 and later.
 
 See BUILDING.txt in the TurboVNC source for basic build requirements.
 Additional build requirements for these scripts are listed below.
@@ -39,7 +39,7 @@ libjpeg-turbo SDK installed in its default location.
 Build Environment: Windows
 --------------------------
 
-Recommended O/S:  Windows XP 64-bit
+Windows XP 64-bit or later required
 
 CMake should be installed somewhere in the PATH.
 
