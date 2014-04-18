@@ -47,6 +47,10 @@ All development kits necessary to build a 32-bit and a 64-bit version of
 TurboVNC (libjpeg-turbo SDK's for Visual C++ should be installed in the
 default location.)
 
+NOTE:  The official TurboVNC binaries are generated using the Windows SDK
+for Windows 7 and .NET Framework 3.5 SP1:
+http://www.microsoft.com/en-us/download/details.aspx?id=3138
+
 
 Build Procedure
 ---------------
