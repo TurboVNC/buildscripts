@@ -14,8 +14,9 @@ Build Environment: Linux
 
 Recommended distro:  Red Hat or CentOS Enterprise Linux 4 64-bit
 
-All development kits necessary to build a 32-bit and a 64-bit version of
-TurboVNC (libjpeg-turbo SDK's should be installed in the default location.)
+Install all development kits necessary to build a 32-bit and a 64-bit version
+of TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDK's should be installed in
+their default locations.  Refer to BUILDING.txt for more information.)
 
 NOTE:  If building on a distro that already has GCC 4, you should edit
 buildvnc.linux and remove the lines that say "CC=gcc4" and "CXX=g++4".
@@ -33,7 +34,7 @@ the DMG (http://www.cmake.org) and sym link
 /Applications/CMake\ {version}.app/Contents/bin/cmake to a directory in your
 PATH.
 
-libjpeg-turbo SDK installed in its default location.
+The libjpeg-turbo SDK should be installed in its default location.
 
 
 Build Environment: Windows
@@ -43,13 +44,29 @@ Windows XP 64-bit or later required
 
 CMake should be installed somewhere in the PATH.
 
-All development kits necessary to build a 32-bit and a 64-bit version of
-TurboVNC (libjpeg-turbo SDK's for Visual C++ should be installed in the
-default location.)
+The directory containing the 64-bit Visual C++ compiler
+(e.g. c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\amd64)
+should be listed in the PATH environment variable.
 
-NOTE:  The official TurboVNC binaries are generated using the Windows SDK
-for Windows 7 and .NET Framework 3.5 SP1:
-http://www.microsoft.com/en-us/download/details.aspx?id=3138
+The directory containing the 64-bit Windows SDK libraries
+(e.g. C:\Program Files\Microsoft SDKs\Windows\v7.0\Lib\x64)
+should be listed in the LIB environment variable.
+
+The directories containing the Visual C++ and Windows SDK header files
+(e.g. c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include and
+C:\Program Files\Microsoft SDKs\Windows\v7.0\include)
+should be listed in the INCLUDE environment variable.
+
+The official TurboVNC binaries are generated using the Windows SDK for
+Windows 7 and .NET Framework 3.5 SP1
+(http://www.microsoft.com/en-us/download/details.aspx?id=3138),
+which contains Visual C++ 10.0, but any reasonably modern version of Visual
+C++ and the Windows SDK should work.
+
+Install all development kits necessary to build a 32-bit and a 64-bit version
+of TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDK's for Visual C++ should
+be installed in their default locations.  Refer to BUILDING.txt for more
+information.)
 
 
 Build Procedure
