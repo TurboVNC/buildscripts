@@ -14,8 +14,8 @@ if [ $# -gt 1 ]; then
 fi
 
 BUILDDIR=$HOME/src/vnc.nightly/latest/files
-PROJWEB=/home/project-web/virtualgl/htdocs/
-SSHSERVER=$1,virtualgl@shell.sourceforge.net
+PROJWEB=/home/project-web/turbovnc/htdocs/
+SSHSERVER=$1,turbovnc@shell.sourceforge.net
 
 if [ ! -d $BUILDDIR ]; then
 	echo No nightly build to upload!
