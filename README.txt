@@ -103,7 +103,7 @@ Executing
   uploadvnc <SourceForge user name>
 
 will upload the files from $HOME/src/vnc.nightly/latest/files to
-http://virtualgl.sourceforge.net/vnc.nightly
+http://turbovnc.sourceforge.net/vnc.nightly
 
 Having an SSH key installed is highly recommended to avoid having to enter your
 password multiple times.
