@@ -21,6 +21,7 @@ pushd turbovnc-[0-9]*
 mkdir osx
 pushd osx
 cmake -G"Unix Makefiles" ..
+export PATH=/opt/local/bin:$PATH
 make dmg
 if [ -f ../release/Info-compat.plist.in ]; then
 	make compatdmg
