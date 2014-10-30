@@ -1,0 +1,30 @@
+#!/bin/sh
+
+set -u
+set -e
+
+if [ $# -lt 2 ]; then
+	echo USAGE: $0 \<SourceForge user name\> \<Release name\>
+	exit -1
+fi
+
+BUILDDIR=$HOME/src/vnc.nightly/latest/files
+FRSDIR=/home/frs/project/turbovnc
+
+SSHSERVER=$1,turbovnc@shell.sourceforge.net
+
+if [ ! -d $BUILDDIR ]; then
+	echo No nightly build to release!
+	exit -1
+fi
+
+echo Uploading build ...
+echo ssh $SSHSERVER create
+echo ssh $SSHSERVER << EOF
+	mkdir "$FRSDIR/$2"
+EOF
+echo scp $BUILDDIR/* "$SSHSERVER:$FRSDIR/'$2'/" || true
+echo ssh $SSHSERVER << EOF
+	rm "$FRSDIR/$2/files.txt" "$FRSDIR/$2/index.html"
+EOF
+exit 0
