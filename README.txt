@@ -91,6 +91,27 @@ running buildvnc.
 Run 'buildvnc -h' for usage information.
 
 
+Signing the Java TurboVNC Viewer JAR File
+-----------------------------------------
+
+To sign the Java TurboVNC Viewer JAR file using an official code signing
+certificate, create a file called "jarsign" in the same directory as buildvnc,
+and include the following contents in the file:
+
+JAVA_KEYSTORE={value of JAVA_KEYSTORE CMake variable}
+JAVA_KEYSTORE_PASS={value of JAVA_KEYSTORE_PASS CMake variable}
+JAVA_KEYSTORE_TYPE={value of JAVA_KEYSTORE_TYPE CMake variable}
+JAVA_KEY_ALIAS={value of JAVA_KEY_ALIAS CMake variable}
+JAVA_KEY_PASS={value of JAVA_KEY_PASS CMake variable}
+JAVA_TSA_URL={value of JAVA_TSA_URL CMake variable}
+
+The CMake variables in question are documented in java/CMakeLists.txt in the
+TurboVNC source.  If the "jarsign" file is not present, then the Java TurboVNC
+Viewer JAR will be signed using a self-signed certificate, which is adequate
+for development purposes but which cannot be easily used in a production
+environment.
+
+
 Distributing a Pre-Release Build
 --------------------------------
 
