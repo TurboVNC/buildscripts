@@ -24,7 +24,6 @@ mkdir -p rpmbuild/RPMS
 mkdir -p rpmbuild/BUILD
 mkdir -p rpmbuild/SRPMS
 mkdir -p rpmbuild/buildroot
-export CC=gcc4
 export CFLAGS=
 export LDFLAGS=
 rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot \
