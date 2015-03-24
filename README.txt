@@ -18,6 +18,9 @@ Install all development kits necessary to build a 32-bit and a 64-bit version
 of TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDK's should be installed in
 their default locations.  Refer to BUILDING.txt for more information.)
 
+The libjpeg-turbo JNI JAR files should be installed under
+/opt/libjpeg-turbo-jni.
+
 
 Build Environment: OS X
 -----------------------

@@ -97,6 +97,7 @@ pushd linux64
 export CFLAGS=
 export LDFLAGS=
 cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DCMAKE_VERBOSE_MAKEFILE=1 \
+	-DTVNC_INCLUDEJNIJARS=1 -DTJPEG_JNIJARDIR=/opt/libjpeg-turbo-jni \
 	"${CMAKEARGS[@]}" ..
 make
 if [ -f ../unix/Xvnc-configure.in ]; then
@@ -110,6 +111,7 @@ pushd linux
 export CFLAGS='-m32'
 export LDFLAGS='-m32'
 cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DCMAKE_VERBOSE_MAKEFILE=1 \
+	-DTVNC_INCLUDEJNIJARS=1 -DTJPEG_JNIJARDIR=/opt/libjpeg-turbo-jni \
 	"${CMAKEARGS[@]}" ..
 make
 if [ -f ../unix/Xvnc-configure.in ]; then

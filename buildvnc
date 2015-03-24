@@ -178,7 +178,7 @@ if [ $NOSRC = 0 ]; then
 		mkdir build
 		pushd build
 		ln -fs ../../turbovnc-$VERSION.tar.gz .
-		cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DCMAKE_VERBOSE_MAKEFILE=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+		cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DTVNC_INCLUDEJNIJARS=1 -DTJPEG_JNIJARDIR=/opt/libjpeg-turbo-jni -DCMAKE_VERBOSE_MAKEFILE=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
 		make srpm
 		mv turbovnc-$VERSION.src.rpm $OUTDIR/files/
 		popd
