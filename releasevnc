@@ -19,12 +19,12 @@ if [ ! -d $BUILDDIR ]; then
 fi
 
 echo Uploading build ...
-echo ssh $SSHSERVER create
-echo ssh $SSHSERVER << EOF
+ssh $SSHSERVER create
+ssh $SSHSERVER << EOF
 	mkdir "$FRSDIR/$2"
 EOF
-echo scp $BUILDDIR/* "$SSHSERVER:$FRSDIR/'$2'/" || true
-echo ssh $SSHSERVER << EOF
+scp $BUILDDIR/* "$SSHSERVER:$FRSDIR/'$2'/" || true
+ssh $SSHSERVER << EOF
 	rm "$FRSDIR/$2/files.txt" "$FRSDIR/$2/index.html"
 EOF
 exit 0
