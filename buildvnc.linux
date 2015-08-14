@@ -78,6 +78,14 @@ VERSION=`rpm -q -p rpmbuild/RPMS/x86_64/turbovnc-[0-9]*.x86_64.rpm | cut -f2 -d-
 mv rpmbuild/RPMS/x86_64/turbovnc-[0-9]*.x86_64.rpm $OUTDIR/files/turbovnc-$VERSION.x86_64.rpm
 mv rpmbuild/RPMS/x86_64/turbovnc-debuginfo-[0-9]*.x86_64.rpm $OUTDIR/files/turbovnc-debuginfo-$VERSION.x86_64.rpm
 
+if [ -f $SCRIPTDIR/gpgsign ]; then
+	. $SCRIPTDIR/gpgsign
+	expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-$VERSION.x86_64.rpm
+	rpm --checksig $OUTDIR/files/turbovnc-$VERSION.x86_64.rpm
+	expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-debuginfo-$VERSION.x86_64.rpm
+	rpm --checksig $OUTDIR/files/turbovnc-debuginfo-$VERSION.x86_64.rpm
+fi
+
 export CFLAGS='-m32'
 export LDFLAGS='-m32'
 rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --target i386 \
@@ -86,6 +94,13 @@ rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --target i386 \
 VERSION=`rpm -q -p rpmbuild/RPMS/i386/turbovnc-[0-9]*.i386.rpm | cut -f2 -d-`
 mv rpmbuild/RPMS/i386/turbovnc-[0-9]*.i386.rpm $OUTDIR/files/turbovnc-$VERSION.i386.rpm
 mv rpmbuild/RPMS/i386/turbovnc-debuginfo-[0-9]*.i386.rpm $OUTDIR/files/turbovnc-debuginfo-$VERSION.i386.rpm
+
+if [ -f $SCRIPTDIR/gpgsign ]; then
+	expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-$VERSION.i386.rpm
+	rpm --checksig $OUTDIR/files/turbovnc-$VERSION.i386.rpm
+	expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-debuginfo-$VERSION.i386.rpm
+	rpm --checksig $OUTDIR/files/turbovnc-debuginfo-$VERSION.i386.rpm
+fi
 
 echo Creating binary DEBs ...
 
@@ -105,6 +120,9 @@ if [ -f ../unix/Xvnc-configure.in ]; then
 fi
 make deb
 mv turbovnc_[0-9]*_amd64.deb $OUTDIR/files/
+if [ -f $SCRIPTDIR/gpgsign ]; then
+	expect $SCRIPTDIR/debsign "$GPG_KEY_PASS" "$GPG_KEY_ID" $OUTDIR/files/turbovnc_[0-9]*_amd64.deb
+fi
 popd
 
 pushd linux
@@ -119,6 +137,9 @@ if [ -f ../unix/Xvnc-configure.in ]; then
 fi
 make deb
 mv turbovnc_[0-9]*_i386.deb $OUTDIR/files/
+if [ -f $SCRIPTDIR/gpgsign ]; then
+	expect $SCRIPTDIR/debsign "$GPG_KEY_PASS" "$GPG_KEY_ID" $OUTDIR/files/turbovnc_[0-9]*_i386.deb
+fi
 popd
 
 popd
