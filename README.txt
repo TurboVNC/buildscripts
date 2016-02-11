@@ -125,7 +125,7 @@ Signing the Java TurboVNC Viewer JAR File
 -----------------------------------------
 
 To sign the Java TurboVNC Viewer JAR file using an official code signing
-certificate, create a file called "jarsign" in the same directory as buildvnc,
+certificate, create a file called "jarsign" under setupscripts/,
 and include the following contents in the file:
 
 JAVA_KEYSTORE={value of JAVA_KEYSTORE CMake variable}

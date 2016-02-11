@@ -20,48 +20,7 @@ fi
 
 exec > $OUTDIR/log-$PLATFORM.txt 2>&1
 
-RPMARGS=
-CMAKEARGS=
-
-if [ -f $SCRIPTDIR/jarsign ]; then
-	. $SCRIPTDIR/jarsign
-
-	echo Signing JAR using official code signing certificate.
-
-	if [ ! -z ${JAVA_KEY_ALIAS+x} ]; then
-		RPMARGS=(--define "java_key_alias $JAVA_KEY_ALIAS")
-		CMAKEARGS=(-DJAVA_KEY_ALIAS="$JAVA_KEY_ALIAS")
-		echo JAVA_KEY_ALIAS=$JAVA_KEY_ALIAS
-	else
-		echo ERROR: JAVA_KEY_ALIAS must be defined
-		exit 1
-	fi
-	if [ ! -z ${JAVA_KEYSTORE+x} ]; then
-		RPMARGS=("${RPMARGS[@]}" --define "java_keystore $JAVA_KEYSTORE")
-		CMAKEARGS=("${CMAKEARGS[@]}" -DJAVA_KEYSTORE="$JAVA_KEYSTORE")
-		echo JAVA_KEYSTORE=$JAVA_KEYSTORE
-	fi
-	if [ ! -z ${JAVA_KEYSTORE_PASS+x} ]; then
-		RPMARGS=("${RPMARGS[@]}" --define "java_keystore_pass $JAVA_KEYSTORE_PASS")
-		CMAKEARGS=("${CMAKEARGS[@]}" -DJAVA_KEYSTORE_PASS="$JAVA_KEYSTORE_PASS")
-		echo JAVA_KEYSTORE_PASS=$JAVA_KEYSTORE_PASS
-	fi
-	if [ ! -z ${JAVA_KEYSTORE_TYPE+x} ]; then
-		RPMARGS=("${RPMARGS[@]}" --define "java_keystore_type $JAVA_KEYSTORE_TYPE")
-		CMAKEARGS=("${CMAKEARGS[@]}" -DJAVA_KEYSTORE_TYPE="$JAVA_KEYSTORE_TYPE")
-		echo JAVA_KEYSTORE_TYPE=$JAVA_KEYSTORE_TYPE
-	fi
-	if [ ! -z ${JAVA_KEY_PASS+x} ]; then
-		RPMARGS=("${RPMARGS[@]}" --define "java_key_pass $JAVA_KEY_PASS")
-		CMAKEARGS=("${CMAKEARGS[@]}" -DJAVA_KEY_PASS="$JAVA_KEY_PASS")
-		echo JAVA_KEY_PASS=$JAVA_KEY_PASS
-	fi
-	if [ ! -z ${JAVA_TSA_URL+x} ]; then
-		RPMARGS=("${RPMARGS[@]}" --define "java_tsa_url $JAVA_TSA_URL")
-		CMAKEARGS=("${CMAKEARGS[@]}" -DJAVA_TSA_URL="$JAVA_TSA_URL")
-		echo JAVA_TSA_URL=$JAVA_TSA_URL
-	fi
-fi
+. $SCRIPTDIR/setupscripts/jarvars
 
 echo Creating binary RPMs ...
 
@@ -111,9 +70,7 @@ mkdir linux64 linux
 pushd linux64
 export CFLAGS=
 export LDFLAGS=
-cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DCMAKE_VERBOSE_MAKEFILE=1 \
-	-DTVNC_INCLUDEJNIJARS=1 -DTJPEG_JNIJARDIR=/opt/libjpeg-turbo-jni \
-	"${CMAKEARGS[@]}" ..
+sh $SCRIPTDIR/setupscripts/linux64
 make
 if [ -f ../unix/Xvnc-configure.in ]; then
 	make xserver
@@ -126,11 +83,7 @@ fi
 popd
 
 pushd linux
-export CFLAGS='-m32'
-export LDFLAGS='-m32'
-cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DCMAKE_VERBOSE_MAKEFILE=1 \
-	-DTVNC_INCLUDEJNIJARS=1 -DTJPEG_JNIJARDIR=/opt/libjpeg-turbo-jni \
-	"${CMAKEARGS[@]}" ..
+sh $SCRIPTDIR/setupscripts/linux
 make
 if [ -f ../unix/Xvnc-configure.in ]; then
 	make xserver
