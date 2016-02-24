@@ -18,6 +18,16 @@ if ls $OUTDIR/files/turbovnc-[0-9]*.i386.rpm >/dev/null 2>&1 \
 	fi
 fi
 
+if [ ! -f /opt/libjpeg-turbo-jni/ljtlinux32.jar ]; then
+	echo ERROR: libjpeg-turbo JNI JAR files are not installed
+	exit 1
+fi
+jar xf /opt/libjpeg-turbo-jni/ljtlinux32.jar libturbojpeg.so
+if ! cmp libturbojpeg.so /opt/libjpeg-turbo/lib32/libturbojpeg.so; then
+	echo ERROR: libjpeg-turbo JNI JAR files do not match the installed version
+	exit 1
+fi
+
 exec > $OUTDIR/log-$PLATFORM.txt 2>&1
 
 . $SCRIPTDIR/setupscripts/jarvars
