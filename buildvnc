@@ -178,7 +178,7 @@ if [ $NOSRC = 0 ]; then
 	fi
 	mkdir build
 	pushd build
-	cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DTVNC_INCLUDEJNIJARS=1 -DCMAKE_VERBOSE_MAKEFILE=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+	cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DTVNC_INCLUDEJNIJARS=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
 	make dist
 	cp turbovnc-$VERSION.tar.gz $OUTDIR/files
 	if [ "$PLATFORM" = "linux" ]; then
