@@ -48,7 +48,7 @@ usage()
 	echo "      binaries to be built for this platform"
 	echo "-s = Build source tarball only"
 	echo "-l = Generate file list and HTML index"
-	echo "-b <b> = Specify build directory (default = ~/src/vgl.nightly/$BUILD)"
+	echo "-b <b> = Specify build directory (default = ~/src/vnc.nightly/$BUILD)"
  	echo
 	exit 1
 }
