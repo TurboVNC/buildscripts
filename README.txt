@@ -5,7 +5,7 @@ These scripts are used to build the "official" TurboVNC binaries, which work
 on any Linux platform with GLIB 2.5 and later, as well as Windows XP and
 later and OS X 10.5 and later.
 
-See BUILDING.txt in the TurboVNC source for basic build requirements.
+See BUILDING.md in the TurboVNC source for basic build requirements.
 Additional build requirements for these scripts are listed below.
 
 
@@ -16,7 +16,7 @@ Recommended distro:  Red Hat or CentOS Enterprise Linux 5 64-bit
 
 Install all development kits necessary to build a 32-bit and a 64-bit version
 of TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDK's should be installed in
-their default locations.  Refer to BUILDING.txt for more information.)
+their default locations.  Refer to BUILDING.md for more information.)
 
 The libjpeg-turbo JNI JAR files should be installed under
 /opt/libjpeg-turbo-jni.
@@ -64,7 +64,7 @@ C++ and the Windows SDK should work.
 
 Install all development kits necessary to build a 32-bit and a 64-bit version
 of TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDK's for Visual C++ should
-be installed in their default locations.  Refer to BUILDING.txt for more
+be installed in their default locations.  Refer to BUILDING.md for more
 information.)
 
 
@@ -73,11 +73,11 @@ Build Procedure
 
 Executing
 
-  buildvnc [repository path]
+  buildvgl [branch/tag]
 
-(where repository path is, for instance, "branches/1.1.x", and defaults to
-"trunk") will generate both a pristine source tarball and binaries for the
-platform on which the script is executed.  These are placed under
+(where branch/tag is, for instance, "2.0.x" and defaults to "master") will
+generate both a pristine source tarball and binaries for the platform on which
+the script is executed.  These are placed under
 $HOME/src/vnc.nightly/YYYYMMDD/files, where YYYYMMDD is a build number based
 on today's date.  If the build is successful, then a sym link will be created
 from $HOME/src/vnc.nightly/latest to $HOME/src/vnc.nightly/YYYYMMDD.
@@ -86,7 +86,7 @@ Once a full build is completed on one platform, then you can use the existing
 source tarball to build binaries on other platforms by running 'buildvnc -e'
 (assuming that $HOME/src is a shared directory.)
 
-NOTE: On Windows, buildvnc should be run from inside a MinGW shell.  If you
+NOTE: On Windows, buildvnc should be run from inside an MSYS shell.  If you
 are mounting your home directory as a drive letter (e.g. H:), then set the HOME
 environment variable to the MinGW path for that drive (e.g. /h) prior to
 running buildvnc.
