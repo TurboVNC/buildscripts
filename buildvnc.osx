@@ -29,6 +29,9 @@ fi
 if [ -f ../release/Info-OracleJava.plist.in ]; then
 	make oracledmg
 fi
+if [ -f ../release/Info-AppleJava.plist.in ]; then
+	make compatdmg
+fi
 mv TurboVNC-[0-9]*.dmg $OUTDIR/files/
 popd
 
