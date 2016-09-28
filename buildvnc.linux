@@ -81,7 +81,7 @@ pushd linux64
 export CFLAGS=
 export LDFLAGS=
 sh $SCRIPTDIR/setupscripts/linux64
-make
+make -j
 if [ -f ../unix/Xvnc-configure.in ]; then
 	make xserver
 fi
@@ -94,7 +94,7 @@ popd
 
 pushd linux
 sh $SCRIPTDIR/setupscripts/linux
-make
+make -j
 if [ -f ../unix/Xvnc-configure.in ]; then
 	make xserver
 fi
