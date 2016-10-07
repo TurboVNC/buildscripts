@@ -188,17 +188,23 @@ if [ $NOSRC = 0 ]; then
 	echo Checking out TurboVNC from $TAG ...
 	git clone --depth=1 -b $TAG $REPO vnc
 	echo Creating source tarball and SRPM ...
+	cp -R vnc vnc.pristine
+	pushd vnc.pristine
+	rm -rf .git .gitattributes .gitignore .travis.yml appveyor.yml ci
+	popd
 	pushd vnc
 	VERSION=`grep "set(VERSION" CMakeLists.txt | sed -e s/[^0-9\.]//g`
 	if [ "$VERSION" = "" ]; then
 		echo Could not parse version from CMakeLists.txt!
 		exit 1
 	fi
-	mkdir build
-	pushd build
-	cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DTVNC_INCLUDEJNIJARS=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+	cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DTVNC_INCLUDEJNIJARS=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo .
 	make dist
-	cp turbovnc-$VERSION.tar.gz $OUTDIR/files
+	popd
+	mv vnc/turbovnc-$VERSION.tar.gz $OUTDIR/files
+	tar xfz $OUTDIR/files/turbovnc-$VERSION.tar.gz
+	diff -r vnc.pristine turbovnc-$VERSION
+	rm -rf vnc.pristine
 	if [ -f $SCRIPTDIR/gpgsign ]; then
 		. $SCRIPTDIR/gpgsign
 		if [ -f $OUTDIR/files/turbovnc-$VERSION.tar.gz.sig ]; then
@@ -208,17 +214,17 @@ if [ $NOSRC = 0 ]; then
 		gpg --verify $OUTDIR/files/turbovnc-$VERSION.tar.gz.sig
 	fi
 	if [ "$PLATFORM" = "linux" ]; then
+		pushd vnc
 		make srpm
-		mv turbovnc-$VERSION.src.rpm $OUTDIR/files/
+		popd
+		mv vnc/turbovnc-$VERSION.src.rpm $OUTDIR/files/
 		if [ -f $SCRIPTDIR/gpgsign ]; then
 			. $SCRIPTDIR/gpgsign
 			expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-$VERSION.src.rpm
 			rpm --checksig $OUTDIR/files/turbovnc-$VERSION.src.rpm
 		fi
 	fi
-	popd
-	popd
-	rm -rf vnc
+	rm -rf vnc vnc-$VERSION
 else
 	if [ "$PLATFORM" = "linux" ]; then
 		if ! ls $OUTDIR/files/turbovnc-[0-9]*.tar.gz >/dev/null 2>&1
