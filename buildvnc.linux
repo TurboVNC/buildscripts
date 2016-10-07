@@ -8,10 +8,10 @@ if ls $OUTDIR/files/turbovnc-[0-9]*.i386.rpm >/dev/null 2>&1 \
 	|| ls $OUTDIR/files/turbovnc*_[0-9]*_amd64.deb >/dev/null 2>&1 \
 	|| ls $OUTDIR/files/turbovnc*_[0-9]*_i386.deb >/dev/null 2>&1; then
 	if [ $FORCEBINARY = 0 ]; then
-		echo
-		echo Binary already exists!
-		echo Run $SCRIPT -fb to rebuild it.
-		echo
+		>&2 echo
+		>&2 echo Binary already exists!
+		>&2 echo Run $SCRIPT -fb to rebuild it.
+		>&2 echo
 		exit 1
 	else
 		rm -f $OUTDIR/files/*.i386.rpm $OUTDIR/files/*.x86_64.rpm $OUTDIR/files/*.deb
@@ -19,16 +19,16 @@ if ls $OUTDIR/files/turbovnc-[0-9]*.i386.rpm >/dev/null 2>&1 \
 fi
 
 if [ ! -f /opt/libjpeg-turbo-jni/ljtlinux32.jar ]; then
-	echo ERROR: libjpeg-turbo JNI JAR files are not installed
+	>&2 echo ERROR: libjpeg-turbo JNI JAR files are not installed
 	exit 1
 fi
 jar xf /opt/libjpeg-turbo-jni/ljtlinux32.jar libturbojpeg.so
 if ! cmp libturbojpeg.so /opt/libjpeg-turbo/lib32/libturbojpeg.so; then
-	echo ERROR: libjpeg-turbo JNI JAR files do not match the installed version
+	>&2 echo ERROR: libjpeg-turbo JNI JAR files do not match the installed version
 	exit 1
 fi
 
-exec > $OUTDIR/log-$PLATFORM.txt 2>&1
+exec 2>&1
 
 . $SCRIPTDIR/setupscripts/jarvars
 

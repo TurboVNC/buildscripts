@@ -13,7 +13,7 @@ if [ -f $__SCRIPTDIR/jarsign ]; then
 		CMAKEARGS=(-DJAVA_KEY_ALIAS="$JAVA_KEY_ALIAS")
 		echo JAVA_KEY_ALIAS=$JAVA_KEY_ALIAS
 	else
-		echo ERROR: JAVA_KEY_ALIAS must be defined
+		>&2 echo ERROR: JAVA_KEY_ALIAS must be defined
 		exit 1
 	fi
 	if [ ! -z ${JAVA_KEYSTORE+x} ]; then
