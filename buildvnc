@@ -55,6 +55,7 @@ usage()
 	echo "-l = Generate file list and HTML index"
 	echo "-b <b> = Specify build directory (default = ~/src/vnc.nightly/$BUILD)"
 	echo "-v = Verbose (show the output of the build in real time)"
+	echo "-r <r> = Specify repository URL (default = $DEFAULT_REPO)"
  	echo
 	exit 1
 }
@@ -103,6 +104,8 @@ NOSRC=0
 UPDATELIST=0
 VERBOSE=0
 TAG=master
+DEFAULT_REPO=https://github.com/turbovnc/turbovnc.git
+REPO=$DEFAULT_REPO
 
 while [ $# -gt 0 ]; do
 	if [ "$1" = "-f" ]; then
@@ -122,6 +125,9 @@ while [ $# -gt 0 ]; do
 		UPDATELIST=1
 	elif [ "$1" = "-v" ]; then
 		VERBOSE=1
+	elif [ "$1" = "-r" ]; then
+		REPO=$2
+		shift
 	elif [ "$1" = "-h" -o "$1" = "-?" ]; then
 		usage
 	else
@@ -177,7 +183,7 @@ fi
 cd $TMPDIR
 if [ $NOSRC = 0 ]; then
 	echo Checking out TurboVNC from $TAG ...
-	git clone --depth=1 -b $TAG https://github.com/TurboVNC/turbovnc.git vnc
+	git clone --depth=1 -b $TAG $REPO vnc
 	echo Creating source tarball and SRPM ...
 	pushd vnc
 	VERSION=`grep "set(VERSION" CMakeLists.txt | sed -e s/[^0-9\.]//g`
