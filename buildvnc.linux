@@ -40,9 +40,14 @@ mkdir -p rpmbuild/SRPMS
 mkdir -p rpmbuild/buildroot
 export CFLAGS=
 export LDFLAGS=
-rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot \
-	--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm \
-	"${RPMARGS[@]}"
+if [ -n "$RPMARGS" ]; then
+	rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot \
+		--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm \
+		"${RPMARGS[@]}"
+else
+	rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot \
+		--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm
+fi
 VERSION=`rpm -q -p rpmbuild/RPMS/x86_64/turbovnc-[0-9]*.x86_64.rpm | cut -f2 -d-`
 mv rpmbuild/RPMS/x86_64/turbovnc-[0-9]*.x86_64.rpm $OUTDIR/files/turbovnc-$VERSION.x86_64.rpm
 mv rpmbuild/RPMS/x86_64/turbovnc-debuginfo-[0-9]*.x86_64.rpm $OUTDIR/files/turbovnc-debuginfo-$VERSION.x86_64.rpm
@@ -57,9 +62,14 @@ fi
 
 export CFLAGS='-m32'
 export LDFLAGS='-m32'
-rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --target i386 \
-	--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm \
-	"${RPMARGS[@]}"
+if [ -n "$RPMARGS" ]; then
+	rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --target i386 \
+		--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm \
+		"${RPMARGS[@]}"
+else
+	rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --target i386 \
+		--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm
+fi
 VERSION=`rpm -q -p rpmbuild/RPMS/i386/turbovnc-[0-9]*.i386.rpm | cut -f2 -d-`
 mv rpmbuild/RPMS/i386/turbovnc-[0-9]*.i386.rpm $OUTDIR/files/turbovnc-$VERSION.i386.rpm
 mv rpmbuild/RPMS/i386/turbovnc-debuginfo-[0-9]*.i386.rpm $OUTDIR/files/turbovnc-debuginfo-$VERSION.i386.rpm
