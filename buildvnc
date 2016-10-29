@@ -198,8 +198,13 @@ if [ $NOSRC = 0 ]; then
 		echo Could not parse version from CMakeLists.txt!
 		exit 1
 	fi
-	cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DTVNC_INCLUDEJNIJARS=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo .
-	make dist
+	if [ "$PLATFORM" = "windows" ]; then
+		cmake -G"NMake Makefiles" -DTVNC_BUILDJAVA=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo .
+		nmake dist
+	else
+		cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DTVNC_INCLUDEJNIJARS=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo .
+		make dist
+	fi
 	popd
 	mv vnc/turbovnc-$VERSION.tar.gz $OUTDIR/files
 	tar xfz $OUTDIR/files/turbovnc-$VERSION.tar.gz
