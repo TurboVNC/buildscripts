@@ -1,17 +1,8 @@
 SCRIPTDIR=`dirname $0`
 
-CMAKE_BUILD_TYPE=Release
+export JAVA_HOME=/usr/java/default32
 
-if [ "$1" = "-g" ]; then
-	CMAKE_BUILD_TYPE=RelWithDebInfo
-	shift
-fi
-
-export CFLAGS='-m32 -Wall'
-export LDFLAGS='-m32'
-
-. $SCRIPTDIR/jarvars
-
-cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
-	-DTVNC_BUILDJAVA=1 -DTVNC_INCLUDEJNIJARS=1 \
-	"${CMAKEARGS[@]}" .. ${1+"$@"}
+LDFLAGS=-m32 \
+$SCRIPTDIR/linux64 \
+	${1+"$@"} \
+	-DCMAKE_C_FLAGS='-m32 -Wall'

@@ -62,6 +62,7 @@ fi
 
 export CFLAGS='-m32'
 export LDFLAGS='-m32'
+export JAVA_HOME=/usr/java/default32
 if [ -n "$RPMARGS" ]; then
 	rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --target i386 \
 		--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm \
@@ -90,6 +91,7 @@ mkdir linux64 linux
 pushd linux64
 export CFLAGS=
 export LDFLAGS=
+export JAVA_HOME=
 $SCRIPTDIR/setupscripts/linux64
 make -j
 if [ -f ../unix/Xvnc-configure.in ]; then
