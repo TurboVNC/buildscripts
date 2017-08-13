@@ -80,6 +80,7 @@ update_list()
 	echo "<html><body><table border=1 cellpadding=5>" >../index.html
 	echo "<tr><th>File</th><th>Size</th><th>Date</th><th>MD5 sum</th></tr>" >>../index.html
 	for i in *; do
+		if [ -d $i ]; then continue; fi
 		LSL=`ls -l $i`
 		SIZE=
 		DATE=
