@@ -28,7 +28,7 @@ nmake installer 2>&1
 nmake 2>&1
 mv TurboVNC64-[0-9]*.exe $OUTDIR/files/
 jar cvf $OUTDIR/files/jni/tvnchelper-win64.jar -C java turbovnchelper.dll
-if [ -n "$JARSIGNERARGS" ]; then
+if [ ${#JARSIGNERARGS[@]} -gt 0 ]; then
 	echo Signing $OUTDIR/files/jni/tvnchelper-win64.jar using key $JAVA_KEY_ALIAS in keystore $JAVA_KEYSTORE
 	jarsigner "${JARSIGNERARGS[@]}" $OUTDIR/files/jni/tvnchelper-win64.jar "$JAVA_KEY_ALIAS"
 fi
@@ -47,7 +47,7 @@ nmake installer 2>&1
 nmake 2>&1
 mv TurboVNC-[0-9]*.exe $OUTDIR/files/
 jar cvf $OUTDIR/files/jni/tvnchelper-win32.jar -C java turbovnchelper.dll
-if [ -n "$JARSIGNERARGS" ]; then
+if [ ${#JARSIGNERARGS[@]} -gt 0 ]; then
 	echo Signing $OUTDIR/files/jni/tvnchelper-win32.jar using key $JAVA_KEY_ALIAS in keystore $JAVA_KEYSTORE
 	jarsigner "${JARSIGNERARGS[@]}" $OUTDIR/files/jni/tvnchelper-win32.jar "$JAVA_KEY_ALIAS"
 fi

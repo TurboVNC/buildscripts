@@ -100,7 +100,7 @@ fi
 make deb
 mv turbovnc_[0-9]*_amd64.deb $OUTDIR/files/
 jar cvf $OUTDIR/files/jni/tvnchelper-linux64.jar -C java libturbovnchelper.so
-if [ -n "$JARSIGNERARGS" ]; then
+if [ ${#JARSIGNERARGS[@]} -gt 0 ]; then
 	echo Signing $OUTDIR/files/jni/tvnchelper-linux64.jar using key $JAVA_KEY_ALIAS in keystore $JAVA_KEYSTORE
 	jarsigner "${JARSIGNERARGS[@]}" $OUTDIR/files/jni/tvnchelper-linux64.jar "$JAVA_KEY_ALIAS"
 fi
@@ -118,7 +118,7 @@ fi
 make deb
 mv turbovnc_[0-9]*_i386.deb $OUTDIR/files/
 jar cvf $OUTDIR/files/jni/tvnchelper-linux32.jar -C java libturbovnchelper.so
-if [ -n "$JARSIGNERARGS" ]; then
+if [ ${#JARSIGNERARGS[@]} -gt 0 ]; then
 	echo Signing $OUTDIR/files/jni/tvnchelper-linux32.jar using key $JAVA_KEY_ALIAS in keystore $JAVA_KEYSTORE
 	jarsigner "${JARSIGNERARGS[@]}" $OUTDIR/files/jni/tvnchelper-linux32.jar "$JAVA_KEY_ALIAS"
 fi
