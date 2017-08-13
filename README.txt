@@ -73,7 +73,7 @@ Build Procedure
 
 Executing
 
-  buildvgl [branch/tag]
+  buildvnc [branch/tag]
 
 (where branch/tag is, for instance, "2.0.x" and defaults to "master") will
 generate both a pristine source tarball and binaries for the platform on which
