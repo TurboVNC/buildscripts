@@ -2,6 +2,7 @@ __SCRIPTDIR=`dirname ${BASH_SOURCE[0]}`
 
 RPMARGS=
 CMAKEARGS=
+JARSIGNERARGS=()
 
 if [ -f $__SCRIPTDIR/jarsign ]; then
 	. $__SCRIPTDIR/jarsign
@@ -19,31 +20,49 @@ if [ -f $__SCRIPTDIR/jarsign ]; then
 	if [ ! -z ${JAVA_KEYSTORE+x} ]; then
 		RPMARGS=("${RPMARGS[@]}" --define "java_keystore $JAVA_KEYSTORE")
 		CMAKEARGS=("${CMAKEARGS[@]}" -DJAVA_KEYSTORE="$JAVA_KEYSTORE")
+		JARSIGNERARGS+=(-keystore "$JAVA_KEYSTORE")
 		echo JAVA_KEYSTORE=$JAVA_KEYSTORE
 	fi
 	if [ ! -z ${JAVA_KEYSTORE_PASS+x} ]; then
 		RPMARGS=("${RPMARGS[@]}" --define "java_keystore_pass $JAVA_KEYSTORE_PASS")
 		CMAKEARGS=("${CMAKEARGS[@]}" -DJAVA_KEYSTORE_PASS="$JAVA_KEYSTORE_PASS")
+		if [[ $JAVA_KEYSTORE_PASS =~ ^file: ]]; then
+			JARSIGNERARGS+=(-storepass:file "${JAVA_KEYSTORE_PASS##*:}")
+		elif [[ $JAVA_KEYSTORE_PASS =~ ^env: ]]; then
+			JARSIGNERARGS+=(-storepass:env "${JAVA_KEYSTORE_PASS##*:}")
+		else
+			JARSIGNERARGS+=(-storepass "$JAVA_KEYSTORE_PASS")
+		fi
 		echo JAVA_KEYSTORE_PASS=$JAVA_KEYSTORE_PASS
 	fi
 	if [ ! -z ${JAVA_KEYSTORE_TYPE+x} ]; then
 		RPMARGS=("${RPMARGS[@]}" --define "java_keystore_type $JAVA_KEYSTORE_TYPE")
 		CMAKEARGS=("${CMAKEARGS[@]}" -DJAVA_KEYSTORE_TYPE="$JAVA_KEYSTORE_TYPE")
+		JARSIGNERARGS+=(-storetype "$JAVA_KEYSTORE_TYPE")
 		echo JAVA_KEYSTORE_TYPE=$JAVA_KEYSTORE_TYPE
 	fi
 	if [ ! -z ${JAVA_KEY_PASS+x} ]; then
 		RPMARGS=("${RPMARGS[@]}" --define "java_key_pass $JAVA_KEY_PASS")
 		CMAKEARGS=("${CMAKEARGS[@]}" -DJAVA_KEY_PASS="$JAVA_KEY_PASS")
+		if [[ $JAVA_KEY_PASS =~ ^file: ]]; then
+			JARSIGNERARGS+=(-keypass:file "${JAVA_KEY_PASS##*:}")
+		elif [[ $JAVA_KEY_PASS =~ ^env: ]]; then
+			JARSIGNERARGS+=(-keypass:env "${JAVA_KEY_PASS##*:}")
+		else
+			JARSIGNERARGS+=(-keypass "$JAVA_KEY_PASS")
+		fi
 		echo JAVA_KEY_PASS=$JAVA_KEY_PASS
 	fi
 	if [ ! -z ${JAVA_TSA_URL+x} ]; then
 		RPMARGS=("${RPMARGS[@]}" --define "java_tsa_url $JAVA_TSA_URL")
 		CMAKEARGS=("${CMAKEARGS[@]}" -DJAVA_TSA_URL="$JAVA_TSA_URL")
+		JARSIGNERARGS+=(-tsa "$JAVA_TSA_URL")
 		echo JAVA_TSA_URL=$JAVA_TSA_URL
 	fi
 	if [ ! -z ${JAVA_TSA_ALG+x} ]; then
 		RPMARGS=("${RPMARGS[@]}" --define "java_tsa_alg $JAVA_TSA_ALG")
 		CMAKEARGS=("${CMAKEARGS[@]}" -DJAVA_TSA_ALG="$JAVA_TSA_ALG")
+		JARSIGNERARGS+=(-tsadigestalg "$JAVA_TSA_ALG")
 		echo JAVA_TSA_ALG=$JAVA_TSA_ALG
 	fi
 fi
