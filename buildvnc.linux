@@ -93,7 +93,8 @@ export CFLAGS=
 export LDFLAGS=
 export JAVA_HOME=
 $SCRIPTDIR/setupscripts/linux64
-make -j
+export NUMCPUS=`grep -c '^processor' /proc/cpuinfo`
+make -j$NUMCPUS --load-average=$NUMCPUS
 if [ -f ../unix/Xvnc-configure.in ]; then
 	make xserver
 fi
@@ -111,7 +112,7 @@ popd
 
 pushd linux
 $SCRIPTDIR/setupscripts/linux
-make -j
+make -j$NUMCPUS --load-average=$NUMCPUS
 if [ -f ../unix/Xvnc-configure.in ]; then
 	make xserver
 fi
