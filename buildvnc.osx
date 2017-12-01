@@ -1,6 +1,8 @@
 set -u
 set -e
 
+SCRIPTDIR=`dirname $0`
+
 if ls $OUTDIR/files/TurboVNC-[0-9]*.dmg >/dev/null 2>&1; then
 	if [ $FORCEBINARY = 0 ]; then
 		>&2 echo
@@ -15,12 +17,14 @@ fi
 
 exec 2>&1
 
+. $SCRIPTDIR/setupscripts/jarvars
+
 export LD_LIBRARY_PATH=
 pushd turbovnc-[0-9]*
 
 mkdir osx
 pushd osx
-cmake -G"Unix Makefiles" ..
+$SCRIPTDIR/setupscripts/osxx8664
 export PATH=/opt/local/bin:$PATH
 make dmg
 if [ -f ../release/Info-compat.plist.in ]; then
@@ -33,6 +37,11 @@ if [ -f ../release/Info-AppleJava.plist.in ]; then
 	make compatdmg
 fi
 mv TurboVNC-[0-9]*.dmg $OUTDIR/files/
+jar cvf $OUTDIR/files/jni/tvnchelper-osx.jar -C java libturbovnchelper.dylib
+if [ ${#JARSIGNERARGS[@]} -gt 0 ]; then
+	echo Signing $OUTDIR/files/jni/tvnchelper-osx.jar using key $JAVA_KEY_ALIAS in keystore $JAVA_KEYSTORE
+	jarsigner "${JARSIGNERARGS[@]}" $OUTDIR/files/jni/tvnchelper-osx.jar "$JAVA_KEY_ALIAS"
+fi
 popd
 
 popd

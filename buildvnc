@@ -230,6 +230,15 @@ if [ $NOSRC = 0 ]; then
 	if [ "$PLATFORM" = "windows" ]; then
 		cmake -G"NMake Makefiles" -DTVNC_BUILDJAVA=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo .
 		nmake dist
+	elif [ "$PLATFORM" = "osx" ]; then
+		if [ -x /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java_home ]; then
+			JAVADIR=`/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java_home`
+		else
+			echo Oracle JDK not found!
+			exit 1
+		fi
+		cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DTVNC_INCLUDEJNIJARS=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DJAVA_INCLUDE_PATH=$JAVADIR/include -DJAVA_INCLUDE_PATH2=$JAVADIR/include/darwin .
+		make dist
 	else
 		cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DTVNC_INCLUDEJNIJARS=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo .
 		make dist
@@ -289,9 +298,7 @@ else
 fi
 echo   done.
 
-if [ "$PLATFORM" = "windows" -o "$PLATFORM" = "linux" ]; then
-	update_jni
-fi
+update_jni
 update_list
 
 if [ "$PLATFORM" != "windows" -a $LATEST = 1 ]; then

@@ -1,0 +1,29 @@
+CMAKE_BUILD_TYPE=Release
+
+if [ "$1" = "-g" ]; then
+	CMAKE_BUILD_TYPE=RelWithDebInfo
+	shift
+fi
+
+# Out of the box, CMake 2.8.x can't find jni.h on Mac unless the (deprecated)
+# Java for OS X Developer Package is installed, so we have to coax it a bit so
+# it can find jni.h from the Oracle JDK.
+if [ -x /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java_home ]; then
+	JAVADIR=`/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java_home`
+else
+	echo Oracle JDK not found!
+	exit 1
+fi
+
+OSX_PLATFORMDIR=/Applications/Xcode43.app/Contents/Developer
+OSX_SYSROOT=$OSX_PLATFORMDIR/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
+
+export CFLAGS='-Wall'
+export CXXFLAGS='-Wall'
+export CC=$OSX_PLATFORMDIR/usr/bin/gcc
+
+cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
+	-DCMAKE_OSX_DEPLOYMENT_TARGET=10.7 -DCMAKE_OSX_SYSROOT=$OSX_SYSROOT \
+	-DJAVA_INCLUDE_PATH=$JAVADIR/include \
+	-DJAVA_INCLUDE_PATH2=$JAVADIR/include/darwin \
+	.. ${1+"$@"}
