@@ -27,10 +27,10 @@ Build Environment: OS X
 
 OS X 10.7 (Lion) or later required
 
-Xcode 4.3.x (available at https://developer.apple.com/downloads --
+Xcode 4.1.x or later (available at https://developer.apple.com/downloads --
 Apple ID required.)  The build scripts need this in order to produce TurboVNC
-binaries that are backward compatible with OS X 10.7.  Xcode should be
-installed under /Applications/Xcode43.app.
+binaries that are backward compatible with OS X 10.7.  The Xcode Command Line
+Tools should be installed.
 
 CMake should be installed somewhere in the PATH.  The version in MacPorts
 (http://www.MacPorts.org) works, or just install the CMake application from

@@ -15,8 +15,12 @@ else
 	exit 1
 fi
 
-OSX_PLATFORMDIR=/Applications/Xcode43.app/Contents/Developer
-OSX_SYSROOT=$OSX_PLATFORMDIR/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
+OSX_PLATFORMDIR=`xcode-select -p`
+if [ -d $OSX_PLATFORMDIR/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk ]; then
+	OSX_SYSROOT=$OSX_PLATFORMDIR/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
+else
+	OSX_SYSROOT=$OSX_PLATFORMDIR/Platforms/MacOSX.platform/Developer/SDKs/`ls $OSX_PLATFORMDIR/Platforms/MacOSX.platform/Developer/SDKs/ | sort -n | head -1`
+fi
 
 export CFLAGS='-Wall'
 export CXXFLAGS='-Wall'
