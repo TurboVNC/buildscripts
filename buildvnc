@@ -58,6 +58,8 @@ usage()
 	echo "-l = Generate file list and HTML index"
 	echo "-r <url> = Specify Git repository URL"
 	echo "           (default = $DEFAULT_REPO)"
+	echo "-d <dir> = Build from existing source directory, located under <dir>"
+	echo "           (useful for continuous integration)"
 	echo "-s = Generate source package(s) only"
 	echo "-v = Verbose (show the output of the build in real time)"
 	echo
@@ -127,6 +129,7 @@ VERBOSE=0
 TAG=master
 DEFAULT_REPO=https://github.com/turbovnc/turbovnc.git
 REPO=$DEFAULT_REPO
+SRCDIR=
 
 while [ $# -gt 0 ]; do
 	if [ "$1" = "-f" ]; then
@@ -150,6 +153,9 @@ while [ $# -gt 0 ]; do
 		VERBOSE=1
 	elif [ "$1" = "-r" ]; then
 		REPO=$2
+		shift
+	elif [ "$1" = "-d" ]; then
+		SRCDIR=$2
 		shift
 	elif [ "$1" = "-h" -o "$1" = "-?" ]; then
 		usage
@@ -214,14 +220,20 @@ else
 fi
 cd $TMPDIR
 if [ $NOSRC = 0 ]; then
-	echo Checking out TurboVNC from $TAG ...
-	git clone --depth=1 -b $TAG $REPO vnc
+	if [ ! "$SRCDIR" = "" ]; then
+		echo Using existing source directory $SRCDIR ...
+		DIR=$SRCDIR
+	else
+		echo Checking out TurboVNC from $TAG ...
+		git clone --depth=1 -b $TAG $REPO vnc
+		DIR=vnc
+	fi
 	echo Creating source tarball and SRPM ...
-	cp -R vnc vnc.pristine
+	cp -R $DIR vnc.pristine
 	pushd vnc.pristine
 	rm -rf .git .gitattributes .gitignore .travis.yml appveyor.yml ci
 	popd
-	pushd vnc
+	pushd $DIR
 	VERSION=`grep "set(VERSION" CMakeLists.txt | sed -e s/[^0-9\.]//g`
 	if [ "$VERSION" = "" ]; then
 		echo Could not parse version from CMakeLists.txt!
@@ -235,7 +247,7 @@ if [ $NOSRC = 0 ]; then
 		make dist
 	fi
 	popd
-	mv vnc/turbovnc-$VERSION.tar.gz $OUTDIR/files
+	mv $DIR/turbovnc-$VERSION.tar.gz $OUTDIR/files/
 	tar xfz $OUTDIR/files/turbovnc-$VERSION.tar.gz
 	diff -r vnc.pristine turbovnc-$VERSION
 	rm -rf vnc.pristine
@@ -248,17 +260,20 @@ if [ $NOSRC = 0 ]; then
 		gpg --verify $OUTDIR/files/turbovnc-$VERSION.tar.gz.sig
 	fi
 	if [ "$PLATFORM" = "linux" ]; then
-		pushd vnc
+		pushd $DIR
 		make srpm
 		popd
-		mv vnc/turbovnc-$VERSION.src.rpm $OUTDIR/files/
+		mv $DIR/turbovnc-$VERSION.src.rpm $OUTDIR/files/
 		if [ -f $SCRIPTDIR/gpgsign ]; then
 			. $SCRIPTDIR/gpgsign
 			expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-$VERSION.src.rpm
 			rpm --checksig $OUTDIR/files/turbovnc-$VERSION.src.rpm
 		fi
 	fi
-	rm -rf vnc vnc-$VERSION
+	rm -rf turbovnc-$VERSION
+	if [ "$SRCDIR" = "" ]; then
+		rm -rf vnc
+	fi
 else
 	if [ "$PLATFORM" = "linux" ]; then
 		if ! ls $OUTDIR/files/turbovnc-[0-9]*.tar.gz >/dev/null 2>&1
