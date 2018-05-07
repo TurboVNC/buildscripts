@@ -20,7 +20,9 @@ pushd turbovnc-[0-9]*
 
 mkdir osx
 pushd osx
-cmake -G"Unix Makefiles" ..
+cmake -G"Unix Makefiles" \
+	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.5 -source 1.5 -Xlint:all,-serial,-cast,-unchecked,-rawtypes' \
+	..
 export PATH=/opt/local/bin:$PATH
 make dmg
 if [ -f ../release/Info-compat.plist.in ]; then

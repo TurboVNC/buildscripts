@@ -38,7 +38,9 @@ mkdir -p rpmbuild/RPMS
 mkdir -p rpmbuild/BUILD
 mkdir -p rpmbuild/SRPMS
 mkdir -p rpmbuild/buildroot
+
 export CFLAGS=
+export JAVAFLAGS='-target 1.5 -source 1.5 -Xlint:all,-serial,-cast,-unchecked,-rawtypes'
 export LDFLAGS=
 if [ -n "$RPMARGS" ]; then
 	rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot \
@@ -74,6 +76,7 @@ fi
 VERSION=`rpm -q -p rpmbuild/RPMS/i386/turbovnc-[0-9]*.i386.rpm | cut -f2 -d-`
 mv rpmbuild/RPMS/i386/turbovnc-[0-9]*.i386.rpm $OUTDIR/files/turbovnc-$VERSION.i386.rpm
 mv rpmbuild/RPMS/i386/turbovnc-debuginfo-[0-9]*.i386.rpm $OUTDIR/files/turbovnc-debuginfo-$VERSION.i386.rpm
+unset JAVAFLAGS
 
 if [ -f $SCRIPTDIR/gpgsign ]; then
 	expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-$VERSION.i386.rpm
