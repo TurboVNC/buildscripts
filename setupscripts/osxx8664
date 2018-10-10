@@ -5,7 +5,7 @@ if [ "$1" = "-g" ]; then
 	shift
 fi
 
-OSX_PLATFORMDIR=`xcode-select -p`
+OSX_PLATFORMDIR=`xcode-select --print-path`
 if [ -d $OSX_PLATFORMDIR/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk ]; then
 	OSX_SYSROOT=$OSX_PLATFORMDIR/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
 else
