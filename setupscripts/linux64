@@ -13,5 +13,5 @@ export CFLAGS='-Wall'
 
 cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.6 -source 1.6 -Xlint:all,-serial,-cast,-unchecked,-rawtypes' \
-	-DTVNC_BUILDJAVA=1 -DTVNC_INCLUDEJNIJARS=1 \
+	-DTVNC_INCLUDEJNIJARS=1 \
 	"${CMAKEARGS[@]}" .. ${1+"$@"}
