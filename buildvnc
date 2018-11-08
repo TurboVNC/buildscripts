@@ -243,7 +243,7 @@ if [ $NOSRC = 0 ]; then
 		cmake -G"NMake Makefiles" -DCMAKE_BUILD_TYPE=RelWithDebInfo .
 		nmake dist
 	else
-		cmake -G"Unix Makefiles" -DTVNC_INCLUDEJNIJARS=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo .
+		cmake -G"Unix Makefiles" -DTVNC_INCLUDEJNIJARS=1 -DCMAKE_INSTALL_SYSCONFDIR=/etc -DCMAKE_BUILD_TYPE=RelWithDebInfo .
 		make dist
 	fi
 	popd
