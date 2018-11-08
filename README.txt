@@ -3,7 +3,7 @@ DRC's TurboVNC Build Scripts
 
 These scripts are used to build the "official" TurboVNC binaries, which work
 on any Linux platform with GLIB 2.5 and later, as well as Windows XP and
-later and OS X 10.5 and later.
+later and OS X 10.7 and later.
 
 See BUILDING.md in the TurboVNC source for basic build requirements.
 Additional build requirements for these scripts are listed below.
@@ -34,9 +34,8 @@ Tools should be installed.
 
 CMake should be installed somewhere in the PATH.  The version in MacPorts
 (http://www.MacPorts.org) works, or just install the CMake application from
-the DMG (http://www.cmake.org) and sym link
-/Applications/CMake\ {version}.app/Contents/bin/cmake to a directory in your
-PATH.
+the DMG (http://www.cmake.org) and add /Applications/CMake.app/Contents/bin to
+the PATH.
 
 The libjpeg-turbo SDK should be installed in its default location.
 
@@ -139,6 +138,7 @@ JAVA_KEYSTORE_TYPE={value of JAVA_KEYSTORE_TYPE CMake variable}
 JAVA_KEY_ALIAS={value of JAVA_KEY_ALIAS CMake variable}
 JAVA_KEY_PASS={value of JAVA_KEY_PASS CMake variable}
 JAVA_TSA_URL={value of JAVA_TSA_URL CMake variable}
+JAVA_TSA_ALG={value of JAVA_TSA_ALG CMake variable}
 
 The CMake variables in question are documented in java/CMakeLists.txt in the
 TurboVNC source.  If the "jarsign" file is not present, then the Java TurboVNC
