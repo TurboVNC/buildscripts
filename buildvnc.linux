@@ -32,6 +32,10 @@ exec 2>&1
 
 . $SCRIPTDIR/setupscripts/jarvars
 
+$SCRIPTDIR/openjdk.install
+export JAVA_HOME=/opt/openjdk
+export PATH=/opt/openjdk/bin:$PATH
+
 echo Creating binary RPMs ...
 
 mkdir -p rpmbuild/RPMS
@@ -43,7 +47,7 @@ export CFLAGS=
 export JAVAFLAGS='-target 1.6 -source 1.6 -Xlint:all,-serial,-cast,-unchecked,-rawtypes'
 export LDFLAGS=
 if [ -n "$RPMARGS" ]; then
-	rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot \
+	rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --define "jre 1" \
 		--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm \
 		"${RPMARGS[@]}"
 else
@@ -94,7 +98,7 @@ mkdir linux64 linux
 pushd linux64
 export CFLAGS=
 export LDFLAGS=
-export JAVA_HOME=
+export JAVA_HOME=/opt/openjdk
 $SCRIPTDIR/setupscripts/linux64
 export NUMCPUS=`grep -c '^processor' /proc/cpuinfo`
 make -j$NUMCPUS --load-average=$NUMCPUS

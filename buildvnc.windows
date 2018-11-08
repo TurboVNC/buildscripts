@@ -19,6 +19,10 @@ exec 2>&1
 
 . $SCRIPTDIR/setupscripts/jarvars
 
+$SCRIPTDIR/openjdk.install
+export JAVA_HOME=/opt/openjdk
+export PATH=/opt/openjdk/bin:$PATH
+
 pushd turbovnc-[0-9]*
 
 mkdir win64

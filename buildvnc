@@ -243,6 +243,13 @@ if [ $NOSRC = 0 ]; then
 		cmake -G"NMake Makefiles" -DCMAKE_BUILD_TYPE=RelWithDebInfo .
 		nmake dist
 	else
+		$SCRIPTDIR/openjdk.install
+		if [ "$PLATFORM" = "osx" ]; then
+			export JAVA_HOME=/opt/openjdk/Contents/Home
+		else
+			export JAVA_HOME=/opt/openjdk
+		fi
+		export PATH=$JAVA_HOME/bin:$PATH
 		cmake -G"Unix Makefiles" -DTVNC_INCLUDEJNIJARS=1 -DCMAKE_INSTALL_SYSCONFDIR=/etc -DCMAKE_BUILD_TYPE=RelWithDebInfo .
 		make dist
 	fi

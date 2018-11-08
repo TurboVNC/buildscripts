@@ -15,6 +15,7 @@ fi
 export CFLAGS='-Wall'
 export CXXFLAGS='-Wall'
 export CC=$OSX_PLATFORMDIR/usr/bin/gcc
+export JAVA_HOME=/opt/openjdk/Contents/Home
 
 cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.6 -source 1.6 -Xlint:all,-serial,-cast,-unchecked,-rawtypes' \

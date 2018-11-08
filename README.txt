@@ -2,8 +2,8 @@ DRC's TurboVNC Build Scripts
 =============================
 
 These scripts are used to build the "official" TurboVNC binaries, which work
-on any Linux platform with GLIB 2.5 and later, as well as Windows XP and
-later and OS X 10.7 and later.
+on any Linux platform with GLIB 2.12 and later, as well as Windows 7 and
+later and OS X 10.9 and later.
 
 See BUILDING.md in the TurboVNC source for basic build requirements.
 Additional build requirements for these scripts are listed below.
@@ -12,7 +12,7 @@ Additional build requirements for these scripts are listed below.
 Build Environment: Linux
 ------------------------
 
-Recommended distro:  Red Hat or CentOS Enterprise Linux 5 64-bit
+Recommended distro:  Red Hat or CentOS Enterprise Linux 6 64-bit
 
 Install all development kits necessary to build a 32-bit and a 64-bit version
 of TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDK's should be installed in
@@ -29,8 +29,9 @@ OS X 10.7 (Lion) or later required
 
 Xcode 4.1.x or later (available at https://developer.apple.com/downloads --
 Apple ID required.)  The build scripts need this in order to produce TurboVNC
-binaries that are backward compatible with OS X 10.7.  The Xcode Command Line
-Tools should be installed.
+binaries that are backward compatible with OS X 10.7 (NOTE: the OS X 10.9
+requirement comes from the custom JRE.)  The Xcode Command Line Tools should be
+installed.
 
 CMake should be installed somewhere in the PATH.  The version in MacPorts
 (http://www.MacPorts.org) works, or just install the CMake application from
@@ -43,7 +44,7 @@ The libjpeg-turbo SDK should be installed in its default location.
 Build Environment: Windows
 --------------------------
 
-Windows XP 64-bit or later required
+Windows 7 64-bit or later required
 
 CMake should be installed somewhere in the PATH.
 
