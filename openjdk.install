@@ -1,10 +1,10 @@
 set -e
 set -u
 
-VERSION=11.0.1
-LINUXJDK=https://download.java.net/java/GA/jdk11/13/GPL/openjdk-$VERSION\_linux-x64_bin.tar.gz
-OSXJDK=https://download.java.net/java/GA/jdk11/13/GPL/openjdk-$VERSION\_osx-x64_bin.tar.gz
-WINJDK=https://download.java.net/java/GA/jdk11/13/GPL/openjdk-$VERSION\_windows-x64_bin.zip
+VERSION=11.0.2
+LINUXJDK=https://download.java.net/java/GA/jdk11/9/GPL/openjdk-$VERSION\_linux-x64_bin.tar.gz
+OSXJDK=https://download.java.net/java/GA/jdk11/9/GPL/openjdk-$VERSION\_osx-x64_bin.tar.gz
+WINJDK=https://download.java.net/java/GA/jdk11/9/GPL/openjdk-$VERSION\_windows-x64_bin.zip
 
 uid()
 {
