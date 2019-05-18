@@ -1,3 +1,5 @@
+SCRIPTDIR=`dirname $0`
+
 CMAKE_BUILD_TYPE=Release
 
 if [ "$1" = "-g" ]; then
@@ -16,7 +18,9 @@ export CFLAGS='-Wall'
 export CXXFLAGS='-Wall'
 export CC=$OSX_PLATFORMDIR/usr/bin/gcc
 
+. $SCRIPTDIR/macvars
+
 cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.6 -source 1.6 -Xlint:all,-serial,-cast,-unchecked,-rawtypes' \
 	-DCMAKE_OSX_DEPLOYMENT_TARGET=10.7 -DCMAKE_OSX_SYSROOT=$OSX_SYSROOT \
-	.. ${1+"$@"}
+	"${CMAKEARGS[@]}" .. ${1+"$@"}
