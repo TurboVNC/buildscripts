@@ -1,14 +1,60 @@
 set -e
 set -u
 
-VERSION=11.0.2
-LINUXJDK=https://download.java.net/java/GA/jdk11/9/GPL/openjdk-$VERSION\_linux-x64_bin.tar.gz
-OSXJDK=https://download.java.net/java/GA/jdk11/9/GPL/openjdk-$VERSION\_osx-x64_bin.tar.gz
-WINJDK=https://download.java.net/java/GA/jdk11/9/GPL/openjdk-$VERSION\_windows-x64_bin.zip
+VERSION=11.0.4
+LINUXJDK=https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.4%2B11/OpenJDK11U-jdk_x64_linux_hotspot_11.0.4_11.tar.gz
+OSXJDK=https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.4%2B11/OpenJDK11U-jdk_x64_mac_hotspot_11.0.4_11.tar.gz
+WIN32JDK=https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.4%2B11/OpenJDK11U-jdk_x86-32_windows_hotspot_11.0.4_11.zip
+WIN64JDK=https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.4%2B11/OpenJDK11U-jdk_x64_windows_hotspot_11.0.4_11.zip
 
 uid()
 {
 	id | cut -f2 -d = | cut -f1 -d \(;
+}
+
+# install <OpenJDK URL> <dest. dir.> <java path> <platform ID>
+install()
+{
+	JDKFILE="`basename $1`"
+
+	mkdir -p ~/.openjdk/$4
+	pushd ~/.openjdk/$4 >/dev/null 2>&1
+
+	NEEDINSTALL=0
+	if [ ! -r ~/.openjdk/$4/$JDKFILE -o ! -d "$2" ]; then
+		NEEDINSTALL=1
+	fi
+	if [ -x "$3" ]; then
+		INSTALLED_VERSION=`"$3" -version 2>&1 | grep -E "^openjdk version" | cut -f2 -d\"`
+		if [ "$INSTALLED_VERSION" != "$VERSION" ]; then
+			NEEDINSTALL=1
+		fi
+	else
+		NEEDINSTALL=1
+	fi
+
+	wget -nv -c "$1"
+	find . -type f ! -name "$JDKFILE" -delete
+
+	if [ "$NEEDINSTALL" = "1" ]; then
+		echo Installing OpenJDK ...
+		$SUDO rm -rf "$2"
+		$SUDO mkdir "$2"
+		$SUDO chmod 755 "$2"
+		EXT=${JDKFILE##*.}
+		if [ "$EXT" = "zip" ]; then
+			pushd "$2" >/dev/null 2>&1
+			unzip -qx ~/.openjdk/$4/$JDKFILE
+			mv jdk-*/* .
+			rmdir jdk-*
+			popd >/dev/null 2>&1
+		else
+			$SUDO tar xfoz "$JDKFILE" -C "$2" --strip-components $STRIP
+		fi
+		echo OpenJDK installed.
+	else
+		echo OpenJDK $VERSION already installed.
+	fi
 }
 
 SUDO=
@@ -16,63 +62,24 @@ if [ ! `uid` -eq 0 ]; then
 	SUDO=sudo
 fi
 
-JDK=
-JAVA=/opt/openjdk/bin/java
 case "`uname -s`" in
 Linux)
-	JDK=$LINUXJDK
 	STRIP=1
+	install $LINUXJDK /opt/openjdk /opt/openjdk/bin/java linux64
 	;;
 Darwin)
-	JDK=$OSXJDK
-	STRIP=2
-	JAVA=/opt/openjdk/Contents/Home/bin/java
+	STRIP=1
+	install $OSXJDK /opt/openjdk /opt/openjdk/Contents/Home/bin/java osxx8664
 	;;
-MINGW*)
-	JDK=$WINJDK
+MSYS*|MINGW*)
 	SUDO=
+	install $WIN32JDK /opt/openjdk /opt/openjdk/bin/java win32
+	install $WIN64JDK /opt/openjdk64 /opt/openjdk64/bin/java win64
 	;;
 *)
 	echo "Unsupported platform"
 	exit 1
 	;;
 esac
-JDKFILE=`basename $JDK`
-
-mkdir -p ~/.openjdk
-pushd ~/.openjdk >/dev/null 2>&1
-
-NEEDINSTALL=0
-if [ ! -r ~/.openjdk/$JDKFILE -o ! -d /opt/openjdk ]; then
-	NEEDINSTALL=1
-fi
-if [ -x "$JAVA" ]; then
-	INSTALLED_VERSION=`"$JAVA" -version 2>&1 | grep -E "^openjdk version" | cut -f2 -d\"`
-	if [ "$INSTALLED_VERSION" != "$VERSION" ]; then
-		NEEDINSTALL=1
-	fi
-else
-	NEEDINSTALL=1
-fi
-
-wget -c $JDK
-find . -type f ! -name $JDKFILE -delete
-
-if [ "$NEEDINSTALL" = "1" ]; then
-	echo Installing OpenJDK ...
-	$SUDO rm -rf /opt/openjdk
-	$SUDO mkdir /opt/openjdk
-	EXT=${JDKFILE##*.}
-	if [ "$EXT" = "zip" ]; then
-		pushd /opt/openjdk >/dev/null 2>&1
-		unzip -qx ~/.openjdk/$JDKFILE
-		mv jdk-*/* .
-		rmdir jdk-*
-		popd >/dev/null 2>&1
-	else
-		$SUDO tar xfoz $JDKFILE -C /opt/openjdk --strip-components $STRIP
-	fi
-fi
 
 popd >/dev/null 2>&1
-echo OpenJDK installed.
