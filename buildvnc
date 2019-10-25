@@ -34,6 +34,7 @@ case "`uname -s`" in
 Linux)  export PLATFORM=linux ;;
 Darwin) export PLATFORM=osx ;;
 MINGW*) export PLATFORM=windows ;;
+MSYS*)  export PLATFORM=windows ;;
 *)      echo "Unsupported platform";  exit 1 ;;
 esac
 
