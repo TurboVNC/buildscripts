@@ -15,20 +15,6 @@ trap onexit INT
 trap onexit TERM
 trap onexit EXIT
 
-PLATFORM=
-
-case "`uname -s`" in
-Linux)  export PLATFORM=linux ;;
-Darwin) export PLATFORM=osx ;;
-MINGW*) export PLATFORM=windows ;;
-*)      echo "Unsupported platform";  exit 1 ;;
-esac
-
-uid()
-{
-  id | cut -f2 -d = | cut -f1 -d \(;
-}
-
 onexit()
 {
 	cd $PREVDIR
@@ -40,6 +26,21 @@ onexit()
 			rm -rf $TMPDIR
 		fi
 	fi
+}
+
+PLATFORM=
+
+case "`uname -s`" in
+Linux)  export PLATFORM=linux ;;
+Darwin) export PLATFORM=osx ;;
+MINGW*) export PLATFORM=windows ;;
+MSYS*)  export PLATFORM=windows ;;
+*)      echo "Unsupported platform";  exit 1 ;;
+esac
+
+uid()
+{
+  id | cut -f2 -d = | cut -f1 -d \(;
 }
 
 usage()
@@ -306,9 +307,9 @@ tar xfz $OUTDIR/files/turbovnc-[0-9]*.tar.gz
 echo   done.
 echo Building TurboVNC for $PLATFORM...
 if [ $VERBOSE = 1 ]; then
-	sh $SCRIPTDIR/buildvnc.$PLATFORM | tee $OUTDIR/log-$PLATFORM.txt
+	$SCRIPTDIR/buildvnc.$PLATFORM | tee $OUTDIR/log-$PLATFORM.txt
 else
-	sh $SCRIPTDIR/buildvnc.$PLATFORM > $OUTDIR/log-$PLATFORM.txt
+	$SCRIPTDIR/buildvnc.$PLATFORM > $OUTDIR/log-$PLATFORM.txt
 fi
 echo   done.
 
