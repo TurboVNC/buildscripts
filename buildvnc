@@ -223,7 +223,8 @@ if [ $NOSRC = 0 ]; then
 			export JAVA_HOME=/opt/openjdk
 		fi
 		export PATH=$JAVA_HOME/bin:$PATH
-		cmake -G"Unix Makefiles" -DCMAKE_INSTALL_SYSCONFDIR=/etc -DCMAKE_BUILD_TYPE=RelWithDebInfo .
+		cmake -G"Unix Makefiles" -DCMAKE_INSTALL_SYSCONFDIR=/etc \
+			-DPYTHON_EXECUTABLE=/usr/bin/python2 -DCMAKE_BUILD_TYPE=RelWithDebInfo .
 		make dist
 	fi
 	popd
