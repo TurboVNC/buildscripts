@@ -17,8 +17,6 @@ fi
 
 exec 2>&1
 
-. $SCRIPTDIR/setupscripts/jarvars
-
 $SCRIPTDIR/openjdk.install
 export JAVA_HOME=/opt/openjdk
 export PATH=/opt/openjdk/bin:$PATH
@@ -31,11 +29,6 @@ $SCRIPTDIR/setupscripts/win64
 nmake installer 2>&1
 nmake 2>&1
 mv TurboVNC-[0-9]*-x64.exe $OUTDIR/files/
-jar cvf $OUTDIR/files/jni/tvnchelper-win64.jar -C java turbovnchelper.dll
-if [ ${#JARSIGNERARGS[@]} -gt 0 ]; then
-	echo Signing $OUTDIR/files/jni/tvnchelper-win64.jar using key $JAVA_KEY_ALIAS in keystore $JAVA_KEYSTORE
-	jarsigner "${JARSIGNERARGS[@]}" $OUTDIR/files/jni/tvnchelper-win64.jar "$JAVA_KEY_ALIAS"
-fi
 if [ -f $SCRIPTDIR/mssign ]; then
 	. $SCRIPTDIR/mssign
 	signtool sign -f "$MS_KEY_FILE" -t http://timestamp.verisign.com/scripts/timstamp.dll -p "$MS_KEY_PASS" $OUTDIR/files/TurboVNC-[0-9]*-x64.exe
@@ -50,11 +43,6 @@ $SCRIPTDIR/setupscripts/win32
 nmake installer 2>&1
 nmake 2>&1
 mv TurboVNC-[0-9]*-x86.exe $OUTDIR/files/
-jar cvf $OUTDIR/files/jni/tvnchelper-win32.jar -C java turbovnchelper.dll
-if [ ${#JARSIGNERARGS[@]} -gt 0 ]; then
-	echo Signing $OUTDIR/files/jni/tvnchelper-win32.jar using key $JAVA_KEY_ALIAS in keystore $JAVA_KEYSTORE
-	jarsigner "${JARSIGNERARGS[@]}" $OUTDIR/files/jni/tvnchelper-win32.jar "$JAVA_KEY_ALIAS"
-fi
 if [ -f $SCRIPTDIR/mssign ]; then
 	signtool sign -f "$MS_KEY_FILE" -t http://timestamp.verisign.com/scripts/timstamp.dll -p "$MS_KEY_PASS" $OUTDIR/files/TurboVNC-[0-9]*-x86.exe
 	signtool verify -pa $OUTDIR/files/TurboVNC-[0-9]*-x86.exe

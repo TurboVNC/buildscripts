@@ -18,19 +18,7 @@ if ls $OUTDIR/files/turbovnc-[0-9]*.i386.rpm >/dev/null 2>&1 \
 	fi
 fi
 
-if [ ! -f /opt/libjpeg-turbo-jni/ljtlinux32.jar ]; then
-	>&2 echo ERROR: libjpeg-turbo JNI JAR files are not installed
-	exit 1
-fi
-jar xf /opt/libjpeg-turbo-jni/ljtlinux32.jar libturbojpeg.so
-if ! cmp libturbojpeg.so /opt/libjpeg-turbo/lib32/libturbojpeg.so; then
-	>&2 echo ERROR: libjpeg-turbo JNI JAR files do not match the installed version
-	exit 1
-fi
-
 exec 2>&1
-
-. $SCRIPTDIR/setupscripts/jarvars
 
 $SCRIPTDIR/openjdk.install
 export JAVA_HOME=/opt/openjdk
@@ -46,14 +34,8 @@ mkdir -p rpmbuild/buildroot
 export CFLAGS=
 export JAVAFLAGS='-target 1.6 -source 1.6 -Xlint:all,-serial,-cast,-unchecked,-rawtypes'
 export LDFLAGS=
-if [ -n "$RPMARGS" ]; then
-	rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --define "jre 1" \
-		--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm \
-		"${RPMARGS[@]}"
-else
-	rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --define "jre 1" \
-		--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm
-fi
+rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --define "jre 1" \
+	--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm
 VERSION=`rpm -q -p rpmbuild/RPMS/x86_64/turbovnc-[0-9]*.x86_64.rpm | cut -f2 -d-`
 mv rpmbuild/RPMS/x86_64/turbovnc-[0-9]*.x86_64.rpm $OUTDIR/files/turbovnc-$VERSION.x86_64.rpm
 mv rpmbuild/RPMS/x86_64/turbovnc-debuginfo-[0-9]*.x86_64.rpm $OUTDIR/files/turbovnc-debuginfo-$VERSION.x86_64.rpm
@@ -69,14 +51,8 @@ fi
 export CFLAGS='-m32'
 export LDFLAGS='-m32'
 export JAVA_HOME=/usr/java/default32
-if [ -n "$RPMARGS" ]; then
-	rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --target i386 \
-		--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm \
-		"${RPMARGS[@]}"
-else
-	rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --target i386 \
-		--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm
-fi
+rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --target i386 \
+	--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm
 VERSION=`rpm -q -p rpmbuild/RPMS/i386/turbovnc-[0-9]*.i386.rpm | cut -f2 -d-`
 mv rpmbuild/RPMS/i386/turbovnc-[0-9]*.i386.rpm $OUTDIR/files/turbovnc-$VERSION.i386.rpm
 mv rpmbuild/RPMS/i386/turbovnc-debuginfo-[0-9]*.i386.rpm $OUTDIR/files/turbovnc-debuginfo-$VERSION.i386.rpm
@@ -107,11 +83,6 @@ if [ -f ../unix/Xvnc-configure.in ]; then
 fi
 make deb
 mv turbovnc_[0-9]*_amd64.deb $OUTDIR/files/
-jar cvf $OUTDIR/files/jni/tvnchelper-linux64.jar -C java libturbovnchelper.so
-if [ ${#JARSIGNERARGS[@]} -gt 0 ]; then
-	echo Signing $OUTDIR/files/jni/tvnchelper-linux64.jar using key $JAVA_KEY_ALIAS in keystore $JAVA_KEYSTORE
-	jarsigner "${JARSIGNERARGS[@]}" $OUTDIR/files/jni/tvnchelper-linux64.jar "$JAVA_KEY_ALIAS"
-fi
 if [ -f $SCRIPTDIR/gpgsign ]; then
 	expect $SCRIPTDIR/debsign "$GPG_KEY_PASS" "$GPG_KEY_ID" $OUTDIR/files/turbovnc_[0-9]*_amd64.deb
 fi
@@ -125,11 +96,6 @@ if [ -f ../unix/Xvnc-configure.in ]; then
 fi
 make deb
 mv turbovnc_[0-9]*_i386.deb $OUTDIR/files/
-jar cvf $OUTDIR/files/jni/tvnchelper-linux32.jar -C java libturbovnchelper.so
-if [ ${#JARSIGNERARGS[@]} -gt 0 ]; then
-	echo Signing $OUTDIR/files/jni/tvnchelper-linux32.jar using key $JAVA_KEY_ALIAS in keystore $JAVA_KEYSTORE
-	jarsigner "${JARSIGNERARGS[@]}" $OUTDIR/files/jni/tvnchelper-linux32.jar "$JAVA_KEY_ALIAS"
-fi
 if [ -f $SCRIPTDIR/gpgsign ]; then
 	expect $SCRIPTDIR/debsign "$GPG_KEY_PASS" "$GPG_KEY_ID" $OUTDIR/files/turbovnc_[0-9]*_i386.deb
 fi

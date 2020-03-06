@@ -17,8 +17,6 @@ fi
 
 exec 2>&1
 
-. $SCRIPTDIR/setupscripts/jarvars
-
 $SCRIPTDIR/openjdk.install
 export JAVA_HOME=/opt/openjdk
 export PATH=/opt/openjdk/Contents/Home/bin:$PATH
@@ -41,11 +39,6 @@ if [ -f ../release/Info-AppleJava.plist.in ]; then
 	make compatdmg
 fi
 mv TurboVNC-[0-9]*.dmg $OUTDIR/files/
-jar cvf $OUTDIR/files/jni/tvnchelper-osx.jar -C java libturbovnchelper.dylib
-if [ ${#JARSIGNERARGS[@]} -gt 0 ]; then
-	echo Signing $OUTDIR/files/jni/tvnchelper-osx.jar using key $JAVA_KEY_ALIAS in keystore $JAVA_KEYSTORE
-	jarsigner "${JARSIGNERARGS[@]}" $OUTDIR/files/jni/tvnchelper-osx.jar "$JAVA_KEY_ALIAS"
-fi
 popd
 
 popd

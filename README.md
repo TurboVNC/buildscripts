@@ -18,9 +18,6 @@ Install all software necessary to build a 32-bit and a 64-bit version of
 TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDK's should be installed in
 their default locations.  Refer to **BUILDING.md** for more information.)
 
-The libjpeg-turbo JNI JAR files should be installed under
-**/opt/libjpeg-turbo-jni**.
-
 
 Build Environment: OS X
 -----------------------
@@ -139,25 +136,3 @@ following contents in the file:
     MS_KEY_PASS={password for certificate}
 
 **signtool** (available in the Windows SDK) must be in the `PATH`.
-
-
-Signing the Java TurboVNC Viewer JAR File
------------------------------------------
-
-To sign the Java TurboVNC Viewer JAR file using an official code signing
-certificate, create a file called **jarsign** under **setupscripts/**,
-and include the following contents in the file:
-
-    JAVA_KEYSTORE={value of JAVA_KEYSTORE CMake variable}
-    JAVA_KEYSTORE_PASS={value of JAVA_KEYSTORE_PASS CMake variable}
-    JAVA_KEYSTORE_TYPE={value of JAVA_KEYSTORE_TYPE CMake variable}
-    JAVA_KEY_ALIAS={value of JAVA_KEY_ALIAS CMake variable}
-    JAVA_KEY_PASS={value of JAVA_KEY_PASS CMake variable}
-    JAVA_TSA_URL={value of JAVA_TSA_URL CMake variable}
-    JAVA_TSA_ALG={value of JAVA_TSA_ALG CMake variable}
-
-The CMake variables in question are documented in **java/CMakeLists.txt** in
-the TurboVNC source.  If the **jarsign** file is not present, then the Java
-TurboVNC Viewer JAR will be signed using a self-signed certificate, which is
-adequate for development purposes but which cannot be easily used in a
-production environment.
