@@ -12,6 +12,6 @@ export CFLAGS='-Wall'
 . $SCRIPTDIR/jarvars
 
 cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
-	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.6 -source 1.6 -Xlint:all,-serial,-cast,-unchecked,-rawtypes' \
+	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.7 -source 1.7 -Xlint:all,-serial,-cast,-unchecked,-rawtypes' \
 	-DTVNC_BUILDJAVA=1 -DTVNC_INCLUDEJNIJARS=1 -DCMAKE_INSTALL_SYSCONFDIR=/etc \
 	"${CMAKEARGS[@]}" .. ${1+"$@"}

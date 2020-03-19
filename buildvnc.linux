@@ -40,7 +40,7 @@ mkdir -p rpmbuild/SRPMS
 mkdir -p rpmbuild/buildroot
 
 export CFLAGS=
-export JAVAFLAGS='-target 1.6 -source 1.6 -Xlint:all,-serial,-cast,-unchecked,-rawtypes'
+export JAVAFLAGS='-target 1.7 -source 1.7 -Xlint:all,-serial,-cast,-unchecked,-rawtypes'
 export LDFLAGS=
 if [ -n "$RPMARGS" ]; then
 	rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot \
