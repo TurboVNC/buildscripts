@@ -8,5 +8,5 @@ fi
 export JAVA_HOME=/opt/openjdk
 
 cmake -G"NMake Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
-	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.6 -source 1.6 -Xlint:all,-serial,-cast,-unchecked,-rawtypes' \
+	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.7 -source 1.7 -Xlint:all,-serial,-cast,-unchecked,-rawtypes' \
 	-DTVNC_INCLUDEJRE=1 .. ${1+"$@"}
