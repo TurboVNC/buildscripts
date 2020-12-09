@@ -3,7 +3,7 @@ DRC's TurboVNC Build Scripts
 
 These scripts are used to build the "official" TurboVNC binaries, which work
 on any Linux platform with GLIB 2.5 and later, as well as Windows XP and later
-and OS X 10.7 and later.
+and OS X/macOS 10.7 and later.
 
 See **BUILDING.md** in the TurboVNC source for basic build requirements.
 Additional build requirements for these scripts are listed below.
@@ -22,10 +22,10 @@ The libjpeg-turbo JNI JAR files should be installed under
 **/opt/libjpeg-turbo-jni**.
 
 
-Build Environment: OS X
------------------------
+Build Environment: OS X/macOS
+-----------------------------
 
-OS X 10.7 (Lion) or later required
+OS X/macOS 10.7 (Lion) or later required
 
 CMake should be installed somewhere in the `PATH`.  The version in MacPorts
 (<http://www.MacPorts.org>) works, or just install the CMake application from
@@ -121,8 +121,8 @@ To sign the Mac TurboVNC Viewer app, installer package, and DMG, create a file
 called **macsign** under **setupscripts/**, and include the following contents
 in the file:
 
-    OSX_APP_CERT_NAME={full name of Mac Developer ID Application certficate (in the macOS keychain) used to sign the app & DMG}
-    OSX_INST_CERT_NAME={full name of Mac Developer ID Installer certificate (in the macOS keychain) used to sign the installer package}
+    MACOS_APP_CERT_NAME={full name of Mac Developer ID Application certficate (in the macOS keychain) used to sign the app & DMG}
+    MACOS_INST_CERT_NAME={full name of Mac Developer ID Installer certificate (in the macOS keychain) used to sign the installer package}
 
 macOS 10.11 "El Capitan" or later is required in order to sign the Mac
 app/package/DMG.

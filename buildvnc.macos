@@ -22,9 +22,9 @@ exec 2>&1
 export LD_LIBRARY_PATH=
 pushd turbovnc-[0-9]*
 
-mkdir osx
-pushd osx
-$SCRIPTDIR/setupscripts/osxx8664
+mkdir macos
+pushd macos
+$SCRIPTDIR/setupscripts/macosx8664
 export PATH=/opt/local/bin:$PATH
 make dmg
 if [ -f ../release/Info-compat.plist.in ]; then
