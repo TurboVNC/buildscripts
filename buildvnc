@@ -32,7 +32,7 @@ PLATFORM=
 
 case "`uname -s`" in
 Linux)  export PLATFORM=linux ;;
-Darwin) export PLATFORM=osx ;;
+Darwin) export PLATFORM=macos ;;
 MINGW*) export PLATFORM=windows ;;
 MSYS*)  export PLATFORM=windows ;;
 *)      echo "Unsupported platform";  exit 1 ;;
@@ -204,7 +204,7 @@ if [ $NOSRC = 0 ]; then
 	echo Creating source tarball and SRPM ...
 	cp -R $DIR vnc.pristine
 	pushd vnc.pristine
-	rm -rf .git .gitattributes .gitignore .travis.yml appveyor.yml ci
+	rm -rf .git .gitattributes .github .gitignore appveyor.yml
 	popd
 	pushd $DIR
 	VERSION=`grep "set(VERSION" CMakeLists.txt | sed -e s/[^0-9\.]//g`
@@ -217,7 +217,7 @@ if [ $NOSRC = 0 ]; then
 		nmake dist
 	else
 		$SCRIPTDIR/openjdk.install
-		if [ "$PLATFORM" = "osx" ]; then
+		if [ "$PLATFORM" = "macos" ]; then
 			export JAVA_HOME=/opt/openjdk/Contents/Home
 		else
 			export JAVA_HOME=/opt/openjdk

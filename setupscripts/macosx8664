@@ -1,0 +1,27 @@
+SCRIPTDIR=`dirname $0`
+
+CMAKE_BUILD_TYPE=Release
+
+if [ "$1" = "-g" ]; then
+	CMAKE_BUILD_TYPE=RelWithDebInfo
+	shift
+fi
+
+MACOS_PLATFORMDIR=`xcode-select --print-path`
+if [ -d $MACOS_PLATFORMDIR/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk ]; then
+	MACOS_SYSROOT=$MACOS_PLATFORMDIR/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
+else
+	MACOS_SYSROOT=$MACOS_PLATFORMDIR/Platforms/MacOSX.platform/Developer/SDKs/`ls $MACOS_PLATFORMDIR/Platforms/MacOSX.platform/Developer/SDKs/ | grep MacOSX | sort -n | head -1`
+fi
+
+export CFLAGS='-Wall'
+export CXXFLAGS='-Wall'
+export CC=$MACOS_PLATFORMDIR/usr/bin/gcc
+export JAVA_HOME=/opt/openjdk/Contents/Home
+
+. $SCRIPTDIR/macvars
+
+cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
+	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.7 -source 1.7 -Xlint:all,-serial,-cast,-unchecked,-rawtypes' \
+	-DCMAKE_OSX_DEPLOYMENT_TARGET=10.7 -DCMAKE_OSX_SYSROOT=$MACOS_SYSROOT \
+	-DTVNC_INCLUDEJRE=1 "${CMAKEARGS[@]}" .. ${1+"$@"}

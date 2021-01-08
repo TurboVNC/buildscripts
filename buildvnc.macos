@@ -24,10 +24,9 @@ export PATH=/opt/openjdk/Contents/Home/bin:$PATH
 export LD_LIBRARY_PATH=
 pushd turbovnc-[0-9]*
 
-mkdir osx
-pushd osx
-$SCRIPTDIR/setupscripts/osxx8664
-export PATH=/opt/local/bin:$PATH
+mkdir macos
+pushd macos
+$SCRIPTDIR/setupscripts/macosx8664
 make dmg
 if [ -f ../release/Info-compat.plist.in ]; then
 	make compatdmg

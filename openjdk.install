@@ -3,7 +3,7 @@ set -u
 
 VERSION=11.0.7
 LINUXJDK=https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz
-OSXJDK=https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10/OpenJDK11U-jdk_x64_mac_hotspot_11.0.7_10.tar.gz
+MACOSJDK=https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10/OpenJDK11U-jdk_x64_mac_hotspot_11.0.7_10.tar.gz
 WIN32JDK=https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10.2/OpenJDK11U-jdk_x86-32_windows_hotspot_11.0.7_10.zip
 WIN64JDK=https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10.2/OpenJDK11U-jdk_x64_windows_hotspot_11.0.7_10.zip
 
@@ -69,7 +69,7 @@ Linux)
 	;;
 Darwin)
 	STRIP=1
-	install $OSXJDK /opt/openjdk /opt/openjdk/Contents/Home/bin/java osxx8664
+	install $MACOSJDK /opt/openjdk /opt/openjdk/Contents/Home/bin/java macosx8664
 	;;
 MSYS*|MINGW*)
 	SUDO=
