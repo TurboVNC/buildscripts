@@ -55,7 +55,7 @@ if [ -f $__SCRIPTDIR/jarsign ]; then
 	fi
 	if [ ! -z ${JAVA_TSA_URL+x} ]; then
 		RPMARGS=("${RPMARGS[@]}" --define "java_tsa_url $JAVA_TSA_URL")
-		CMAKEARGS=("${CMAKEARGS[@]}" -DJAVA_TSA_URL="$JAVA_TSA_URL")
+		CMAKEARGS=("${CMAKEARGS[@]}" -DJAVA_TSA_URL:STRING="$JAVA_TSA_URL")
 		JARSIGNERARGS+=(-tsa "$JAVA_TSA_URL")
 		echo JAVA_TSA_URL=$JAVA_TSA_URL
 	fi
