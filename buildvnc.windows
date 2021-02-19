@@ -34,7 +34,7 @@ if [ ${#JARSIGNERARGS[@]} -gt 0 ]; then
 fi
 if [ -f $SCRIPTDIR/mssign ]; then
 	. $SCRIPTDIR/mssign
-	signtool sign -f "$MS_KEY_FILE" -t http://timestamp.verisign.com/scripts/timstamp.dll -p "$MS_KEY_PASS" $OUTDIR/files/TurboVNC-[0-9]*-x64.exe
+	signtool sign -f "$MS_KEY_FILE" -t "$MS_TSA_URL" -p "$MS_KEY_PASS" $OUTDIR/files/TurboVNC-[0-9]*-x64.exe
 	signtool verify -pa $OUTDIR/files/TurboVNC-[0-9]*-x64.exe
 fi
 popd
@@ -52,7 +52,7 @@ if [ ${#JARSIGNERARGS[@]} -gt 0 ]; then
 	jarsigner "${JARSIGNERARGS[@]}" $OUTDIR/files/jni/tvnchelper-win32.jar "$JAVA_KEY_ALIAS"
 fi
 if [ -f $SCRIPTDIR/mssign ]; then
-	signtool sign -f "$MS_KEY_FILE" -t http://timestamp.verisign.com/scripts/timstamp.dll -p "$MS_KEY_PASS" $OUTDIR/files/TurboVNC-[0-9]*-x86.exe
+	signtool sign -f "$MS_KEY_FILE" -t "$MS_TSA_URL" -p "$MS_KEY_PASS" $OUTDIR/files/TurboVNC-[0-9]*-x86.exe
 	signtool verify -pa $OUTDIR/files/TurboVNC-[0-9]*-x86.exe
 fi
 popd
