@@ -46,24 +46,17 @@ Windows 7 64-bit or later required
 CMake (the Windows native version, not the Cygwin version) should be installed
 somewhere in the `PATH`.
 
-The directory containing the 64-bit Visual C++ compiler
-(e.g. **c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\amd64**)
-should be listed in the `PATH` environment variable.
+The directory containing the 64-bit Visual C++ compiler should be listed in the
+`PATH` environment variable.  The directory containing the 64-bit Windows SDK
+libraries should be listed in the `LIB` environment variable.  The directories
+containing the Visual C++ and Windows SDK header files should be listed in the
+`INCLUDE` environment variable.  The easiest way to accomplish this is to use
+the `vcvars64.bat` script provided by Visual C++, as described in the
+TurboVNC build instructions.
 
-The directory containing the 64-bit Windows SDK libraries
-(e.g. **C:\Program Files\Microsoft SDKs\Windows\v7.0\Lib\x64**)
-should be listed in the `LIB` environment variable.
-
-The directories containing the Visual C++ and Windows SDK header files
-(e.g. **c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include** and
-**C:\Program Files\Microsoft SDKs\Windows\v7.0\include**)
-should be listed in the `INCLUDE` environment variable.
-
-The official TurboVNC binaries are generated using the Windows SDK for
-Windows 7 and .NET Framework 3.5 SP1
-(<http://www.microsoft.com/en-us/download/details.aspx?id=3138>),
-which contains Visual C++ 10.0, but any reasonably modern version of Visual
-C++ and the Windows SDK should work.
+The official TurboVNC binaries are generated using
+[Visual Studio 2015 Community Edition](https://visualstudio.microsoft.com), but
+any reasonably modern version of Visual C++ and the Windows SDK should work.
 
 Install all other software necessary to build a 32-bit and a 64-bit version of
 TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDKs for Visual C++ should be
