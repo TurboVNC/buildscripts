@@ -1,7 +1,10 @@
 export PATH=${PATH//bin\/amd64/bin}
 export PATH=${PATH//bin\/x64/bin}
+export PATH=${PATH//bin\/10.0.18362.0\/x64/bin\/10.0.18362.0\/x86}
 export LIB=${LIB//lib\\amd64/lib}
 export LIB=${LIB//lib\\x64/lib}
+export LIB=${LIB//ucrt\\x64/ucrt\\x86}
+export LIB=${LIB//um\\x64/um\\x86}
 export LIB=${LIB//libjpeg-turbo64\\lib/libjpeg-turbo\\lib}
 echo PATH = $PATH
 echo LIB = $LIB
