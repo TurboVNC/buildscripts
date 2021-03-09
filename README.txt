@@ -15,7 +15,7 @@ Build Environment: Linux
 Recommended distro:  Red Hat or CentOS Enterprise Linux 5 64-bit
 
 Install all development kits necessary to build a 32-bit and a 64-bit version
-of TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDK's should be installed in
+of TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDKs should be installed in
 their default locations.  Refer to BUILDING.md for more information.)
 
 The libjpeg-turbo JNI JAR files should be installed under
@@ -63,7 +63,7 @@ which contains Visual C++ 10.0, but any reasonably modern version of Visual
 C++ and the Windows SDK should work.
 
 Install all development kits necessary to build a 32-bit and a 64-bit version
-of TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDK's for Visual C++ should
+of TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDKs for Visual C++ should
 be installed in their default locations.  Refer to BUILDING.md for more
 information.)
 
