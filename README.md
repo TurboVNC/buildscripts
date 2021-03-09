@@ -2,8 +2,8 @@ DRC's TurboVNC Build Scripts
 =============================
 
 These scripts are used to build the "official" TurboVNC binaries, which work
-on any Linux platform with GLIBC 2.5 and later, as well as Windows XP and later
-and OS X/macOS 10.7 and later.
+on any Linux platform with GLIBC 2.12 and later, as well as Windows XP and
+later and OS X/macOS 10.7 and later.
 
 See **BUILDING.md** in the TurboVNC source for basic build requirements.
 Additional build requirements for these scripts are listed below.
@@ -12,7 +12,7 @@ Additional build requirements for these scripts are listed below.
 Build Environment: Linux
 ------------------------
 
-Recommended distro:  Red Hat or CentOS Enterprise Linux 5 64-bit
+Recommended distro:  Red Hat or CentOS Enterprise Linux 6 64-bit
 
 Install all software necessary to build a 32-bit and a 64-bit version of
 TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDK's should be installed in
