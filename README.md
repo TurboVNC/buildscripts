@@ -2,7 +2,7 @@ DRC's TurboVNC Build Scripts
 =============================
 
 These scripts are used to build the "official" TurboVNC binaries, which work
-on any Linux platform with GLIB 2.5 and later, as well as Windows XP and later
+on any Linux platform with GLIBC 2.5 and later, as well as Windows XP and later
 and OS X/macOS 10.7 and later.
 
 See **BUILDING.md** in the TurboVNC source for basic build requirements.
