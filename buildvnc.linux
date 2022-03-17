@@ -78,9 +78,6 @@ export JAVA_HOME=/opt/openjdk
 $SCRIPTDIR/setupscripts/linux64
 export NUMCPUS=`grep -c '^processor' /proc/cpuinfo`
 make -j$NUMCPUS --load-average=$NUMCPUS
-if [ -f ../unix/Xvnc-configure.in ]; then
-	make xserver
-fi
 make deb
 mv turbovnc_[0-9]*_amd64.deb $OUTDIR/files/
 if [ -f $SCRIPTDIR/gpgsign ]; then
@@ -91,9 +88,6 @@ popd
 pushd linux
 $SCRIPTDIR/setupscripts/linux
 make -j$NUMCPUS --load-average=$NUMCPUS
-if [ -f ../unix/Xvnc-configure.in ]; then
-	make xserver
-fi
 make deb
 mv turbovnc_[0-9]*_i386.deb $OUTDIR/files/
 if [ -f $SCRIPTDIR/gpgsign ]; then
