@@ -5,7 +5,9 @@ SCRIPTDIR=`dirname $0`
 
 if ls $OUTDIR/files/turbovnc-[0-9]*.i386.rpm >/dev/null 2>&1 \
 	|| ls $OUTDIR/files/turbovnc-[0-9]*.x86_64.rpm >/dev/null 2>&1 \
+	|| ls $OUTDIR/files/turbovnc-[0-9]*.aarch.rpm >/dev/null 2>&1 \
 	|| ls $OUTDIR/files/turbovnc*_[0-9]*_amd64.deb >/dev/null 2>&1 \
+	|| ls $OUTDIR/files/turbovnc*_[0-9]*_arm64.deb >/dev/null 2>&1 \
 	|| ls $OUTDIR/files/turbovnc*_[0-9]*_i386.deb >/dev/null 2>&1; then
 	if [ $FORCEBINARY = 0 ]; then
 		>&2 echo
@@ -14,7 +16,7 @@ if ls $OUTDIR/files/turbovnc-[0-9]*.i386.rpm >/dev/null 2>&1 \
 		>&2 echo
 		exit 1
 	else
-		rm -f $OUTDIR/files/*.i386.rpm $OUTDIR/files/*.x86_64.rpm $OUTDIR/files/*.deb
+		rm -f $OUTDIR/files/*.i386.rpm $OUTDIR/files/*.x86_64.rpm $OUTDIR/files/*.aarch64.rpm $OUTDIR/files/*.deb
 	fi
 fi
 
@@ -24,7 +26,7 @@ $SCRIPTDIR/openjdk.install
 export JAVA_HOME=/opt/openjdk
 export PATH=/opt/openjdk/bin:$PATH
 
-echo Creating binary RPMs ...
+echo Creating i386 and x86-64 binary RPMs ...
 
 mkdir -p rpmbuild/RPMS
 mkdir -p rpmbuild/BUILD
@@ -65,7 +67,7 @@ if [ -f $SCRIPTDIR/gpgsign ]; then
 	rpm --checksig $OUTDIR/files/turbovnc-debuginfo-$VERSION.i386.rpm
 fi
 
-echo Creating binary DEBs ...
+echo Creating i386 and amd64 binary DEBs ...
 
 rm -rf rpmbuild
 pushd turbovnc-[0-9]*
@@ -92,6 +94,26 @@ make deb
 mv turbovnc_[0-9]*_i386.deb $OUTDIR/files/
 if [ -f $SCRIPTDIR/gpgsign ]; then
 	expect $SCRIPTDIR/debsign "$GPG_KEY_PASS" "$GPG_KEY_ID" $OUTDIR/files/turbovnc_[0-9]*_i386.deb
+fi
+popd
+
+echo Creating AArch64 binary RPM and DEB ...
+
+mkdir linux64.arm
+pushd linux64.arm
+$SCRIPTDIR/setupscripts/linux64.arm
+make -j$NUMCPUS --load-average=$NUMCPUS
+STRIP=/opt/gcc.arm64/bin/aarch64-none-linux-gnu-strip make rpm
+VERSION=`rpm -q -p turbovnc-[0-9]*.aarch64.rpm | cut -f2 -d-`
+mv turbovnc-[0-9]*.aarch64.rpm $OUTDIR/files/turbovnc-$VERSION.aarch64.rpm
+if [ -f $SCRIPTDIR/gpgsign ]; then
+	expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-$VERSION.aarch64.rpm
+	rpm --checksig $OUTDIR/files/turbovnc-$VERSION.aarch64.rpm
+fi
+make deb
+mv turbovnc_[0-9]*_arm64.deb $OUTDIR/files/
+if [ -f $SCRIPTDIR/gpgsign ]; then
+	expect $SCRIPTDIR/debsign "$GPG_KEY_PASS" "$GPG_KEY_ID" $OUTDIR/files/turbovnc_[0-9]*_arm64.deb
 fi
 popd
 
