@@ -98,9 +98,6 @@ export JAVA_HOME=
 $SCRIPTDIR/setupscripts/linux64
 export NUMCPUS=`grep -c '^processor' /proc/cpuinfo`
 make -j$NUMCPUS --load-average=$NUMCPUS
-if [ -f ../unix/Xvnc-configure.in ]; then
-	make xserver
-fi
 make deb
 mv turbovnc_[0-9]*_amd64.deb $OUTDIR/files/
 jar cvf $OUTDIR/files/jni/tvnchelper-linux64.jar -C java libturbovnchelper.so
@@ -116,9 +113,6 @@ popd
 pushd linux
 $SCRIPTDIR/setupscripts/linux
 make -j$NUMCPUS --load-average=$NUMCPUS
-if [ -f ../unix/Xvnc-configure.in ]; then
-	make xserver
-fi
 make deb
 mv turbovnc_[0-9]*_i386.deb $OUTDIR/files/
 jar cvf $OUTDIR/files/jni/tvnchelper-linux32.jar -C java libturbovnchelper.so
