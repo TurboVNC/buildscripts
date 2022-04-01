@@ -241,8 +241,8 @@ if [ $NOSRC = 0 ]; then
 		exit 1
 	fi
 	if [ "$PLATFORM" = "windows" ]; then
-		cmake -G"NMake Makefiles" -DTVNC_BUILDJAVA=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo .
-		nmake dist
+		CC=cl cmake -G"Ninja" -DTVNC_BUILDJAVA=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo .
+		ninja dist
 	else
 		cmake -G"Unix Makefiles" -DTVNC_BUILDJAVA=1 -DTVNC_INCLUDEJNIJARS=1 -DCMAKE_INSTALL_SYSCONFDIR=/etc -DCMAKE_BUILD_TYPE=RelWithDebInfo .
 		make dist

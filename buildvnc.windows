@@ -24,8 +24,8 @@ pushd turbovnc-[0-9]*
 mkdir win64
 pushd win64
 $SCRIPTDIR/setupscripts/win64
-nmake installer 2>&1
-nmake 2>&1
+ninja installer
+ninja
 mv TurboVNC-[0-9]*-x64.exe $OUTDIR/files/
 jar cvf $OUTDIR/files/jni/tvnchelper-win64.jar -C java turbovnchelper.dll
 if [ ${#JARSIGNERARGS[@]} -gt 0 ]; then
@@ -43,8 +43,8 @@ popd
 mkdir win32
 pushd win32
 $SCRIPTDIR/setupscripts/win32
-nmake installer 2>&1
-nmake 2>&1
+ninja installer
+ninja
 mv TurboVNC-[0-9]*-x86.exe $OUTDIR/files/
 jar cvf $OUTDIR/files/jni/tvnchelper-win32.jar -C java turbovnchelper.dll
 if [ ${#JARSIGNERARGS[@]} -gt 0 ]; then

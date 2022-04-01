@@ -18,6 +18,6 @@ export JAVA_HOME=`pwd`
 popd
 export PATH="$JAVA_HOME/bin:$PATH"
 
-cmake -G"NMake Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
+CC=cl cmake -G"Ninja" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.7 -source 1.7 -Xlint:all,-serial,-cast,-unchecked,-rawtypes' \
 	-DTVNC_BUILDJAVA=1 .. ${1+"$@"}
