@@ -1,19 +1,20 @@
 set -e
 set -u
 
-VERSION=11.0.14.1
-LINUXJDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14.1%2B1/OpenJDK11U-jdk_x64_linux_hotspot_11.0.14.1_1.tar.gz
-LINUXAARCH64JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14.1%2B1/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.14.1_1.tar.gz
-MACOSJDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14.1%2B1/OpenJDK11U-jdk_x64_mac_hotspot_11.0.14.1_1.tar.gz
+VERSION=11.0.15
+WIN32VERSION=11.0.14.1
+LINUXJDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.15%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.15_10.tar.gz
+LINUXAARCH64JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.15%2B10/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.15_10.tar.gz
+MACOSJDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.15%2B10/OpenJDK11U-jdk_x64_mac_hotspot_11.0.15_10.tar.gz
 WIN32JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14.1%2B1/OpenJDK11U-jdk_x86-32_windows_hotspot_11.0.14.1_1.zip
-WIN64JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14.1%2B1/OpenJDK11U-jdk_x64_windows_hotspot_11.0.14.1_1.zip
+WIN64JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.15%2B10/OpenJDK11U-jdk_x64_windows_hotspot_11.0.15_10.zip
 
 uid()
 {
 	id | cut -f2 -d = | cut -f1 -d \(;
 }
 
-# install <OpenJDK URL> <dest. dir.> <release path> <platform ID>
+# install <OpenJDK URL> <dest. dir.> <release path> <platform ID> <version>
 install()
 {
 	JDKFILE="`basename $1`"
@@ -27,7 +28,7 @@ install()
 	fi
 	if [ -f $3 ]; then
 		INSTALLED_VERSION=`grep JAVA_VERSION= $3 | cut -f2 -d\"`
-		if [ "$INSTALLED_VERSION" != "$VERSION" ]; then
+		if [ "$INSTALLED_VERSION" != "$5" ]; then
 			NEEDINSTALL=1
 		fi
 	else
@@ -54,7 +55,7 @@ install()
 		fi
 		echo OpenJDK installed.
 	else
-		echo OpenJDK $VERSION already installed.
+		echo OpenJDK $5 already installed.
 	fi
 }
 
@@ -66,17 +67,17 @@ fi
 case "`uname -s`" in
 Linux)
 	STRIP=1
-	install $LINUXJDK /opt/openjdk /opt/openjdk/release linux64
-	install $LINUXAARCH64JDK /opt/openjdk11.arm64 /opt/openjdk11.arm64/release linux.arm64
+	install $LINUXJDK /opt/openjdk /opt/openjdk/release linux64 $VERSION
+	install $LINUXAARCH64JDK /opt/openjdk11.arm64 /opt/openjdk11.arm64/release linux.arm64 $VERSION
 	;;
 Darwin)
 	STRIP=1
-	install $MACOSJDK /opt/openjdk /opt/openjdk/Contents/Home/release macosx8664
+	install $MACOSJDK /opt/openjdk /opt/openjdk/Contents/Home/release macosx8664 $VERSION
 	;;
 MSYS*|MINGW*)
 	SUDO=
-	install $WIN32JDK /opt/openjdk /opt/openjdk/release win32
-	install $WIN64JDK /opt/openjdk64 /opt/openjdk64/release win64
+	install $WIN32JDK /opt/openjdk /opt/openjdk/release win32 $WIN32VERSION
+	install $WIN64JDK /opt/openjdk64 /opt/openjdk64/release win64 $VERSION
 	;;
 *)
 	echo "Unsupported platform"
