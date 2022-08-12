@@ -1,13 +1,12 @@
 set -e
 set -u
 
-VERSION=11.0.15
-WIN32VERSION=11.0.14.1
-LINUXJDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.15%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.15_10.tar.gz
-LINUXAARCH64JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.15%2B10/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.15_10.tar.gz
-MACOSJDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.15%2B10/OpenJDK11U-jdk_x64_mac_hotspot_11.0.15_10.tar.gz
-WIN32JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14.1%2B1/OpenJDK11U-jdk_x86-32_windows_hotspot_11.0.14.1_1.zip
-WIN64JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.15%2B10/OpenJDK11U-jdk_x64_windows_hotspot_11.0.15_10.zip
+VERSION=11.0.16
+LINUXJDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.16%2B8/OpenJDK11U-jdk_x64_linux_hotspot_11.0.16_8.tar.gz
+LINUXAARCH64JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.16%2B8/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.16_8.tar.gz
+MACOSJDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.16%2B8/OpenJDK11U-jdk_x64_mac_hotspot_11.0.16_8.tar.gz
+WIN32JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.16%2B8/OpenJDK11U-jdk_x86-32_windows_hotspot_11.0.16_8.zip
+WIN64JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.16%2B8/OpenJDK11U-jdk_x64_windows_hotspot_11.0.16_8.zip
 
 uid()
 {
@@ -76,7 +75,7 @@ Darwin)
 	;;
 MSYS*|MINGW*)
 	SUDO=
-	install $WIN32JDK /opt/openjdk /opt/openjdk/release win32 $WIN32VERSION
+	install $WIN32JDK /opt/openjdk /opt/openjdk/release win32 $VERSION
 	install $WIN64JDK /opt/openjdk64 /opt/openjdk64/release win64 $VERSION
 	;;
 *)
