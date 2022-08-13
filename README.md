@@ -59,23 +59,22 @@ For convenience, a Docker recipe is available at
 <https://github.com/TurboVNC/docker>.
 
 
-Build Environment: OS X/macOS
------------------------------
+Build Environment: macOS
+------------------------
 
-OS X/macOS 10.7 (Lion) or later required
+macOS 10.15 (Catalina) or later required
 
 CMake should be installed somewhere in the `PATH`.  The version in MacPorts
 (<http://www.MacPorts.org>) works, or just install the CMake application from
 the DMG (<http://www.cmake.org>) and add
 **/Applications/CMake.app/Contents/bin** to the `PATH`.
 
-Xcode 4.1.x or later (available at <https://developer.apple.com/downloads> --
-Apple ID required.)  The build scripts need this in order to produce TurboVNC
-binaries that are backward compatible with OS X 10.7 (NOTE: the OS X 10.9
-requirement comes from the custom JRE.)  The Xcode Command Line Tools should be
-installed.
+Xcode 12.2.x (available at <https://developer.apple.com/downloads> --
+Apple ID required.)  Xcode should be installed under
+**/Applications/Xcode_12.2.app**.
 
-The libjpeg-turbo SDK should be installed in its default location.
+The libjpeg-turbo SDK (v2.1.x or later) should be installed in its default
+location.
 
 
 Build Environment: Windows

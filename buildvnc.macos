@@ -18,25 +18,21 @@ fi
 exec 2>&1
 
 $SCRIPTDIR/openjdk.install
-export JAVA_HOME=/opt/openjdk
-export PATH=/opt/openjdk/Contents/Home/bin:$PATH
 
 export LD_LIBRARY_PATH=
 pushd turbovnc-[0-9]*
+
+mkdir macosarm64
+pushd macosarm64
+$SCRIPTDIR/setupscripts/macosarm64
+make dmg
+mv TurboVNC-[0-9]*.dmg $OUTDIR/files/
+popd
 
 mkdir macos
 pushd macos
 $SCRIPTDIR/setupscripts/macosx8664
 make dmg
-if [ -f ../release/Info-compat.plist.in ]; then
-	make compatdmg
-fi
-if [ -f ../release/Info-OracleJava.plist.in ]; then
-	make oracledmg
-fi
-if [ -f ../release/Info-AppleJava.plist.in ]; then
-	make compatdmg
-fi
 mv TurboVNC-[0-9]*.dmg $OUTDIR/files/
 popd
 
