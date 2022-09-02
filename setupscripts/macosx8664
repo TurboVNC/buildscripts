@@ -15,7 +15,6 @@ else
 fi
 
 export CFLAGS='-Wall'
-export CXXFLAGS='-Wall'
 export CC=$MACOS_PLATFORMDIR/usr/bin/gcc
 export JAVA_HOME=/opt/openjdk/Contents/Home
 
