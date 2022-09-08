@@ -18,8 +18,8 @@ fi
 exec 2>&1
 
 $SCRIPTDIR/openjdk.install
-export JAVA_HOME=/opt/openjdk
-export PATH=/opt/openjdk/bin:$PATH
+export JAVA_HOME=/opt/openjdk17
+export PATH=/opt/openjdk17/bin:$PATH
 
 pushd turbovnc-[0-9]*
 

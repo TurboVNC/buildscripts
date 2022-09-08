@@ -218,9 +218,9 @@ if [ $NOSRC = 0 ]; then
 	else
 		$SCRIPTDIR/openjdk.install
 		if [ "$PLATFORM" = "macos" ]; then
-			export JAVA_HOME=/opt/openjdk/Contents/Home
+			export JAVA_HOME=/opt/openjdk17/Contents/Home
 		else
-			export JAVA_HOME=/opt/openjdk
+			export JAVA_HOME=/opt/openjdk17
 		fi
 		export PATH=$JAVA_HOME/bin:$PATH
 		cmake -G"Unix Makefiles" -DCMAKE_INSTALL_SYSCONFDIR=/etc \

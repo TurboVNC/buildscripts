@@ -14,10 +14,10 @@ EOF
 	-DCMAKE_TOOLCHAIN_FILE=linux64-arm-toolchain.cmake \
 	-DTJPEG_INCLUDE_DIR=/opt/arm64/opt/libjpeg-turbo/include \
 	-DTJPEG_LIBRARY=/opt/arm64/opt/libjpeg-turbo/lib64/libturbojpeg.a \
-	-DTVNC_JDK_MODULE_PATH=/opt/openjdk11.arm64/jmods \
-	-DJAVA_AWT_INCLUDE_PATH=/opt/openjdk11.arm64/include \
-	-DJAVA_AWT_LIBRARY=/opt/openjdk11.arm64/lib/libjawt.so \
-	-DJAVA_INCLUDE_PATH=/opt/openjdk11.arm64/include \
-	-DJAVA_INCLUDE_PATH2=/opt/openjdk11.arm64/include/linux \
-	-DJAVA_JVM_LIBRARY=/opt/openjdk11.arm64/lib/server/libjvm.so \
+	-DTVNC_JDK_MODULE_PATH=/opt/openjdk17.arm64/jmods \
+	-DJAVA_AWT_INCLUDE_PATH=/opt/openjdk17.arm64/include \
+	-DJAVA_AWT_LIBRARY=/opt/openjdk17.arm64/lib/libjawt.so \
+	-DJAVA_INCLUDE_PATH=/opt/openjdk17.arm64/include \
+	-DJAVA_INCLUDE_PATH2=/opt/openjdk17.arm64/include/linux \
+	-DJAVA_JVM_LIBRARY=/opt/openjdk17.arm64/lib/server/libjvm.so \
 	-DPAM_LIBRARY=/opt/arm64/usr/lib64/libpam.so

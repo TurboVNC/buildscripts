@@ -16,7 +16,7 @@ fi
 
 export CFLAGS='-Wall'
 export CC=$MACOS_PLATFORMDIR/usr/bin/gcc
-export JAVA_HOME=/opt/openjdk/Contents/Home
+export JAVA_HOME=/opt/openjdk17/Contents/Home
 
 . $SCRIPTDIR/macvars
 

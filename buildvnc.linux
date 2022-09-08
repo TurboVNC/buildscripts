@@ -23,8 +23,8 @@ fi
 exec 2>&1
 
 $SCRIPTDIR/openjdk.install
-export JAVA_HOME=/opt/openjdk
-export PATH=/opt/openjdk/bin:$PATH
+export JAVA_HOME=/opt/openjdk17
+export PATH=/opt/openjdk17/bin:$PATH
 
 echo Creating i386 and x86-64 binary RPMs ...
 
@@ -76,7 +76,7 @@ mkdir linux64 linux
 pushd linux64
 export CFLAGS=
 export LDFLAGS=
-export JAVA_HOME=/opt/openjdk
+export JAVA_HOME=/opt/openjdk17
 $SCRIPTDIR/setupscripts/linux64
 export NUMCPUS=`grep -c '^processor' /proc/cpuinfo`
 make -j$NUMCPUS --load-average=$NUMCPUS

@@ -1,13 +1,13 @@
 set -e
 set -u
 
-VERSION=11.0.16
-LINUXJDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.16%2B8/OpenJDK11U-jdk_x64_linux_hotspot_11.0.16_8.tar.gz
-LINUXAARCH64JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.16%2B8/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.16_8.tar.gz
-MACOSJDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.16%2B8/OpenJDK11U-jdk_x64_mac_hotspot_11.0.16_8.tar.gz
-MACOSAARCH64JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.16%2B8/OpenJDK11U-jdk_aarch64_mac_hotspot_11.0.16_8.tar.gz
-WIN32JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.16%2B8/OpenJDK11U-jdk_x86-32_windows_hotspot_11.0.16_8.zip
-WIN64JDK=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.16%2B8/OpenJDK11U-jdk_x64_windows_hotspot_11.0.16_8.zip
+VERSION=17.0.4.1
+LINUXJDK=https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.4.1%2B1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.4.1_1.tar.gz
+LINUXAARCH64JDK=https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.4.1%2B1/OpenJDK17U-jdk_aarch64_linux_hotspot_17.0.4.1_1.tar.gz
+MACOSJDK=https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.4.1%2B1/OpenJDK17U-jdk_x64_mac_hotspot_17.0.4.1_1.tar.gz
+MACOSAARCH64JDK=https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.4.1%2B1/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.4.1_1.tar.gz
+WIN32JDK=https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.4.1%2B1/OpenJDK17U-jdk_x86-32_windows_hotspot_17.0.4.1_1.zip
+WIN64JDK=https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.4.1%2B1/OpenJDK17U-jdk_x64_windows_hotspot_17.0.4.1_1.zip
 
 uid()
 {
@@ -67,18 +67,18 @@ fi
 case "`uname -s`" in
 Linux)
 	STRIP=1
-	install $LINUXJDK /opt/openjdk /opt/openjdk/release linux64 $VERSION
-	install $LINUXAARCH64JDK /opt/openjdk11.arm64 /opt/openjdk11.arm64/release linux.arm64 $VERSION
+	install $LINUXJDK /opt/openjdk17 /opt/openjdk17/release linux64 $VERSION
+	install $LINUXAARCH64JDK /opt/openjdk17.arm64 /opt/openjdk17.arm64/release linux.arm64 $VERSION
 	;;
 Darwin)
 	STRIP=1
-	install $MACOSJDK /opt/openjdk /opt/openjdk/Contents/Home/release macosx8664 $VERSION
-	install $MACOSAARCH64JDK /opt/openjdk11.arm64 /opt/openjdk11.arm64/Contents/Home/release macosarm64 $VERSION
+	install $MACOSJDK /opt/openjdk17 /opt/openjdk17/Contents/Home/release macosx8664 $VERSION
+	install $MACOSAARCH64JDK /opt/openjdk17.arm64 /opt/openjdk17.arm64/Contents/Home/release macosarm64 $VERSION
 	;;
 MSYS*|MINGW*)
 	SUDO=
-	install $WIN32JDK /opt/openjdk /opt/openjdk/release win32 $VERSION
-	install $WIN64JDK /opt/openjdk64 /opt/openjdk64/release win64 $VERSION
+	install $WIN32JDK /opt/openjdk17 /opt/openjdk17/release win32 $VERSION
+	install $WIN64JDK /opt/openjdk17.x64 /opt/openjdk17.x64/release win64 $VERSION
 	;;
 *)
 	echo "Unsupported platform"
