@@ -14,9 +14,9 @@ Build Environment: Linux
 
 Recommended distro:  Red Hat or CentOS Enterprise Linux 6 x86-64
 
-Install all software necessary to build an i386 and an x86-64 version of
-TurboVNC (both i386 and x86-64 libjpeg-turbo SDKs should be installed in their
-default locations.  Refer to **BUILDING.md** for more information.)
+Install all software necessary to build an x86-64 version of TurboVNC.  (The
+x86-64 libjpeg-turbo SDK should be installed in its default location.  Refer to
+**BUILDING.md** for more information.)
 
 Install a compatible x86-64 Linux hosted/AArch64 Linux target toolchain
 (available at
