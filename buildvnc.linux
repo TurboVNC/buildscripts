@@ -57,9 +57,9 @@ mv rpmbuild/RPMS/x86_64/turbovnc-debuginfo-[0-9]*.x86_64.rpm $OUTDIR/files/turbo
 if [ -f $SCRIPTDIR/gpgsign ]; then
 	. $SCRIPTDIR/gpgsign
 	expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-$VERSION.x86_64.rpm
-	rpm --checksig $OUTDIR/files/turbovnc-$VERSION.x86_64.rpm
+	rpm --checksig -v $OUTDIR/files/turbovnc-$VERSION.x86_64.rpm
 	expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-debuginfo-$VERSION.x86_64.rpm
-	rpm --checksig $OUTDIR/files/turbovnc-debuginfo-$VERSION.x86_64.rpm
+	rpm --checksig -v $OUTDIR/files/turbovnc-debuginfo-$VERSION.x86_64.rpm
 fi
 
 export CFLAGS='-m32'
@@ -80,9 +80,9 @@ unset JAVAFLAGS
 
 if [ -f $SCRIPTDIR/gpgsign ]; then
 	expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-$VERSION.i386.rpm
-	rpm --checksig $OUTDIR/files/turbovnc-$VERSION.i386.rpm
+	rpm --checksig -v $OUTDIR/files/turbovnc-$VERSION.i386.rpm
 	expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-debuginfo-$VERSION.i386.rpm
-	rpm --checksig $OUTDIR/files/turbovnc-debuginfo-$VERSION.i386.rpm
+	rpm --checksig -v $OUTDIR/files/turbovnc-debuginfo-$VERSION.i386.rpm
 fi
 
 echo Creating binary DEBs ...
