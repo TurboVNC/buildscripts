@@ -2,7 +2,7 @@ DRC's TurboVNC Build Scripts
 =============================
 
 These scripts are used to build the "official" TurboVNC binaries, which work
-on any Linux platform with GLIB 2.12 and later, as well as Windows 7 and later
+on any Linux platform with GLIBC 2.17 and later, as well as Windows 7 and later
 and OS X/macOS 10.9 and later.
 
 See **BUILDING.md** in the TurboVNC source for basic build requirements.
@@ -12,51 +12,10 @@ Additional build requirements for these scripts are listed below.
 Build Environment: Linux
 ------------------------
 
-Recommended distro:  Red Hat or CentOS Enterprise Linux 6 x86-64
+Recommended distro:  Red Hat or CentOS Enterprise Linux 7 x86-64
 
-Install all software necessary to build an x86-64 version of TurboVNC.  (The
-x86-64 libjpeg-turbo SDK should be installed in its default location.  Refer to
-**BUILDING.md** for more information.)
-
-Install a compatible x86-64 Linux hosted/AArch64 Linux target toolchain
-(available at
-<https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads>)
-under **/opt/gcc.arm64**.  Note that 9.2-2019.12 is the latest toolchain that
-will run on RHEL 6.
-
-Using `rpm2cpio`, install the following packages from Red Hat or CentOS
-Enterprise Linux 7 AArch64 under **/opt/arm64**:
-
-- audit-libs
-- glibc
-- glibc-devel
-- krb5-devel
-- libcap-ng
-- libcom_err-devel
-- libICE
-- libICE-devel
-- libSM
-- libSM-devel
-- libuuid
-- libX11
-- libX11-devel
-- libXau
-- libXau-devel
-- libxcb
-- libXext
-- libXext-devel
-- libXfixes-devel
-- libXi
-- libXi-devel
-- openssl-devel
-- openssl-libs
-- pam
-- pam-devel
-
-Using `rpm2cpio`, install the AArch64 libjpeg-turbo RPM under **/opt/arm64**.
-
-For convenience, a Docker recipe is available at
-<https://github.com/TurboVNC/docker>.
+Complete Linux build environment requirements are best understood by examining
+the official Docker recipe at <https://github.com/TurboVNC/docker>.
 
 
 Build Environment: macOS

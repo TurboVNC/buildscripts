@@ -247,8 +247,7 @@ if [ $NOSRC = 0 ]; then
 		popd
 		mv $DIR/turbovnc-$VERSION.src.rpm $OUTDIR/files/
 		if [ -f $SCRIPTDIR/gpgsign ]; then
-			. $SCRIPTDIR/gpgsign
-			expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-$VERSION.src.rpm
+			$SCRIPTDIR/rpmsign $OUTDIR/files/turbovnc-$VERSION.src.rpm
 			rpm --checksig -v $OUTDIR/files/turbovnc-$VERSION.src.rpm
 		fi
 	fi

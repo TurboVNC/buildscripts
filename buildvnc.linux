@@ -41,10 +41,9 @@ mv rpmbuild/RPMS/x86_64/turbovnc-[0-9]*.x86_64.rpm $OUTDIR/files/turbovnc-$VERSI
 mv rpmbuild/RPMS/x86_64/turbovnc-debuginfo-[0-9]*.x86_64.rpm $OUTDIR/files/turbovnc-debuginfo-$VERSION.x86_64.rpm
 
 if [ -f $SCRIPTDIR/gpgsign ]; then
-	. $SCRIPTDIR/gpgsign
-	expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-$VERSION.x86_64.rpm
+	$SCRIPTDIR/rpmsign $OUTDIR/files/turbovnc-$VERSION.x86_64.rpm
 	rpm --checksig -v $OUTDIR/files/turbovnc-$VERSION.x86_64.rpm
-	expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-debuginfo-$VERSION.x86_64.rpm
+	$SCRIPTDIR/rpmsign $OUTDIR/files/turbovnc-debuginfo-$VERSION.x86_64.rpm
 	rpm --checksig -v $OUTDIR/files/turbovnc-debuginfo-$VERSION.x86_64.rpm
 fi
 
@@ -64,6 +63,7 @@ make -j$NUMCPUS --load-average=$NUMCPUS
 make deb
 mv turbovnc_[0-9]*_amd64.deb $OUTDIR/files/
 if [ -f $SCRIPTDIR/gpgsign ]; then
+	. $SCRIPTDIR/gpgsign
 	expect $SCRIPTDIR/debsign "$GPG_KEY_PASS" "$GPG_KEY_ID" $OUTDIR/files/turbovnc_[0-9]*_amd64.deb
 fi
 popd
@@ -78,7 +78,7 @@ STRIP=/opt/gcc.arm64/bin/aarch64-none-linux-gnu-strip make rpm
 VERSION=`rpm -q -p turbovnc-[0-9]*.aarch64.rpm | cut -f2 -d-`
 mv turbovnc-[0-9]*.aarch64.rpm $OUTDIR/files/turbovnc-$VERSION.aarch64.rpm
 if [ -f $SCRIPTDIR/gpgsign ]; then
-	expect $SCRIPTDIR/rpmsign "$GPG_KEY_PASS" "$GPG_KEY_NAME" $OUTDIR/files/turbovnc-$VERSION.aarch64.rpm
+	$SCRIPTDIR/rpmsign $OUTDIR/files/turbovnc-$VERSION.aarch64.rpm
 	rpm --checksig -v $OUTDIR/files/turbovnc-$VERSION.aarch64.rpm
 fi
 make deb
