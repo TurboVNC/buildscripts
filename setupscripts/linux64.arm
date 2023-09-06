@@ -7,7 +7,7 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_REQUIRED_LINK_OPTIONS --sysroot;/opt/arm64)
-set(CMAKE_C_FLAGS "-Wall -DHAVE_MEMFD_CREATE -I/opt/arm64/usr/include -Wl,-rpath-link,/opt/arm64/usr/lib64:/opt/arm64/lib64")
+set(CMAKE_C_FLAGS "-Wall -DHAVE_MEMFD_CREATE -I/opt/arm64/usr/include -Wl,-L,/opt/arm64/usr/lib64 -Wl,-rpath-link,/opt/arm64/usr/lib64:/opt/arm64/lib64")
 EOF
 
 `dirname $0`/linux64 ${1+"$@"} \
