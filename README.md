@@ -57,10 +57,9 @@ The official TurboVNC binaries are generated using
 [Visual Studio 2015 Community Edition](https://visualstudio.microsoft.com), but
 any reasonably modern version of Visual C++ and the Windows SDK should work.
 
-Install all other software necessary to build a 32-bit and a 64-bit version of
-TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDKs for Visual C++ should be
-installed in their default locations.  Refer to **BUILDING.md** for more
-information.)
+Install all other software necessary to build a 64-bit version of TurboVNC.
+(The 64-bit libjpeg-turbo SDK for Visual C++ should be installed in its default
+location.  Refer to **BUILDING.md** for more information.)
 
 
 Build Procedure
