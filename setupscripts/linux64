@@ -8,7 +8,7 @@ if [ "$1" = "-g" ]; then
 fi
 
 export CFLAGS='-Wall'
-export JAVA_HOME=/opt/openjdk17
+export JAVA_HOME=/opt/openjdk21
 
 cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.8 -source 1.8 -Xlint:all,-serial,-cast,-unchecked,-rawtypes' \

@@ -21,7 +21,7 @@ set(CMAKE_C_COMPILER $MACOS_PLATFORMDIR/usr/bin/gcc)
 EOF
 
 export CFLAGS="-arch arm64 -mmacosx-version-min=11.0 -Wall"
-export JAVA_HOME=/opt/openjdk17/Contents/Home
+export JAVA_HOME=/opt/openjdk21/Contents/Home
 
 . $SCRIPTDIR/macvars
 
@@ -29,10 +29,10 @@ cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.8 -source 1.8 -Xlint:all,-serial,-cast,-unchecked,-rawtypes' \
 	-DCMAKE_OSX_DEPLOYMENT_TARGET=11 -DCMAKE_OSX_SYSROOT=$MACOS_SYSROOT \
 	-DTVNC_INCLUDEJRE=1 -DCMAKE_TOOLCHAIN_FILE=toolchain.cmake \
-	-DTVNC_JDK_MODULE_PATH=/opt/openjdk17.arm64/Contents/Home/jmods \
-	-DJAVA_AWT_INCLUDE_PATH=/opt/openjdk17.arm64/Contents/Home/include \
-	-DJAVA_AWT_LIBRARY=/opt/openjdk17.arm64/Contents/Home/lib/libjawt.dylib \
-	-DJAVA_INCLUDE_PATH=/opt/openjdk17.arm64/Contents/Home/include \
-	-DJAVA_INCLUDE_PATH2=/opt/openjdk17.arm64/Contents/Home/include/darwin \
-	-DJAVA_JVM_LIBRARY=/opt/openjdk17.arm64/Contents/Home/lib/server/libjvm.dylib \
+	-DTVNC_JDK_MODULE_PATH=/opt/openjdk21.arm64/Contents/Home/jmods \
+	-DJAVA_AWT_INCLUDE_PATH=/opt/openjdk21.arm64/Contents/Home/include \
+	-DJAVA_AWT_LIBRARY=/opt/openjdk21.arm64/Contents/Home/lib/libjawt.dylib \
+	-DJAVA_INCLUDE_PATH=/opt/openjdk21.arm64/Contents/Home/include \
+	-DJAVA_INCLUDE_PATH2=/opt/openjdk21.arm64/Contents/Home/include/darwin \
+	-DJAVA_JVM_LIBRARY=/opt/openjdk21.arm64/Contents/Home/lib/server/libjvm.dylib \
 	"${CMAKEARGS[@]}" .. ${1+"$@"}
