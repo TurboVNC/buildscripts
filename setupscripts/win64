@@ -8,5 +8,5 @@ fi
 export JAVA_HOME=/opt/openjdk64
 
 CC=cl cmake -G"Ninja" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
-	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.8 -source 1.8 -Xlint:all,-serial,-cast,-unchecked,-rawtypes' \
+	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.8 -source 1.8 -Xlint:all,-serial,-unchecked,-rawtypes' \
 	-DTVNC_INCLUDEJRE=1 .. ${1+"$@"}
