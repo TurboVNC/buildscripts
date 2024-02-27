@@ -26,6 +26,7 @@ export JAVA_HOME=/opt/openjdk21/Contents/Home
 . $SCRIPTDIR/macvars
 
 cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
+	-DCMAKE_OBJC_FLAGS="-arch arm64 -mmacosx-version-min=11.0 -Wall" \
 	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.8 -source 1.8 -Xlint:all,-serial,-unchecked,-rawtypes' \
 	-DCMAKE_OSX_DEPLOYMENT_TARGET=11 -DCMAKE_OSX_SYSROOT=$MACOS_SYSROOT \
 	-DTVNC_INCLUDEJRE=1 -DCMAKE_TOOLCHAIN_FILE=toolchain.cmake \
