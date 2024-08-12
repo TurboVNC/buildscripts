@@ -34,6 +34,7 @@ mkdir -p rpmbuild/buildroot
 export CFLAGS=
 export JAVAFLAGS='-target 1.8 -source 1.8 -Xlint:all,-serial,-unchecked,-rawtypes'
 export LDFLAGS=
+CC=/opt/rh/devtoolset-9/root/usr/bin/gcc \
 rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --define "jre 1" \
 	--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm
 VERSION=`rpm -q -p rpmbuild/RPMS/x86_64/turbovnc-[0-9]*.x86_64.rpm | cut -f2 -d-`
