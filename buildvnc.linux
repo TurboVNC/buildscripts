@@ -32,7 +32,7 @@ mkdir -p rpmbuild/SRPMS
 mkdir -p rpmbuild/buildroot
 
 export CFLAGS=
-export JAVAFLAGS='-target 1.8 -source 1.8 -Xlint:all,-serial,-unchecked,-rawtypes'
+export JAVAFLAGS='-target 15 -source 15 -Xlint:all,-serial,-unchecked,-rawtypes'
 export LDFLAGS=
 CC=/opt/rh/devtoolset-9/root/usr/bin/gcc \
 rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --define "jre 1" \

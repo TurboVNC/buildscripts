@@ -22,7 +22,7 @@ EOF
 export JAVA_HOME=/opt/openjdk21
 
 cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
-	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.8 -source 1.8 -Xlint:all,-serial,-unchecked,-rawtypes' \
+	-DCMAKE_JAVA_COMPILE_FLAGS='-target 15 -source 15 -Xlint:all,-serial,-unchecked,-rawtypes' \
 	-DTVNC_INCLUDEJRE=1 -DCMAKE_INSTALL_SYSCONFDIR=/etc \
 	-DPYTHON_EXECUTABLE=/usr/bin/python2 \
 	-DCMAKE_TOOLCHAIN_FILE=linux64-arm-toolchain.cmake \
