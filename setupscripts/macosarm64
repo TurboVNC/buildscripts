@@ -14,22 +14,18 @@ else
 	MACOS_SYSROOT=$MACOS_PLATFORMDIR/Platforms/MacOSX.platform/Developer/SDKs/`ls $MACOS_PLATFORMDIR/Platforms/MacOSX.platform/Developer/SDKs/ | grep MacOSX | sort -n | head -1`
 fi
 
-cat <<EOF >toolchain.cmake
-set(CMAKE_SYSTEM_NAME Darwin)
-set(CMAKE_SYSTEM_PROCESSOR aarch64)
-set(CMAKE_C_COMPILER $MACOS_PLATFORMDIR/usr/bin/gcc)
-EOF
-
-export CFLAGS="-arch arm64 -mmacosx-version-min=11.0 -Wall"
+export CFLAGS="-mmacosx-version-min=11.0 -Wall"
 export JAVA_HOME=/opt/openjdk17/Contents/Home
 
 . $SCRIPTDIR/macvars
 
 cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
-	-DCMAKE_OBJC_FLAGS="-arch arm64 -mmacosx-version-min=11.0 -Wall" \
-	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.8 -source 1.8 -Xlint:all,-serial,-unchecked,-rawtypes' \
+	-DCMAKE_C_COMPILER=$MACOS_PLATFORMDIR/usr/bin/gcc \
+	-DCMAKE_OBJC_FLAGS="-mmacosx-version-min=11.0 -Wall" \
+	-DCMAKE_OSX_ARCHITECTURES="arm64" \
 	-DCMAKE_OSX_DEPLOYMENT_TARGET=11 -DCMAKE_OSX_SYSROOT=$MACOS_SYSROOT \
-	-DTVNC_INCLUDEJRE=1 -DCMAKE_TOOLCHAIN_FILE=toolchain.cmake \
+	-DCMAKE_JAVA_COMPILE_FLAGS='-target 1.8 -source 1.8 -Xlint:all,-serial,-unchecked,-rawtypes' \
+	-DTVNC_INCLUDEJRE=1 \
 	-DTVNC_JDK_MODULE_PATH=/opt/openjdk17.arm64/Contents/Home/jmods \
 	-DJAVA_AWT_INCLUDE_PATH=/opt/openjdk17.arm64/Contents/Home/include \
 	-DJAVA_AWT_LIBRARY=/opt/openjdk17.arm64/Contents/Home/lib/libjawt.dylib \
