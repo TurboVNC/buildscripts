@@ -279,6 +279,7 @@ tar xfz $OUTDIR/files/turbovnc-[0-9]*.tar.gz
 echo   done.
 echo Building TurboVNC for $PLATFORM...
 if [ $VERBOSE = 1 ]; then
+	set -o pipefail
 	$SCRIPTDIR/buildvnc.$PLATFORM | tee $OUTDIR/log-$PLATFORM.txt
 else
 	$SCRIPTDIR/buildvnc.$PLATFORM > $OUTDIR/log-$PLATFORM.txt
