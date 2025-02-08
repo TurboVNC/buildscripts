@@ -22,10 +22,21 @@ $SCRIPTDIR/openjdk.install
 export LD_LIBRARY_PATH=
 pushd turbovnc-[0-9]*
 
+if [ -f $SCRIPTDIR/setupscripts/macsign ]; then
+	. $SCRIPTDIR/setupscripts/macsign
+fi
+
 mkdir macosarm64
 pushd macosarm64
 $SCRIPTDIR/setupscripts/macosarm64
 make dmg
+if [ -n "${MACOS_NOTARIZE_ID-}" -a -n "${MACOS_NOTARIZE_TEAM_ID-}" -a \
+	-n "${MACOS_NOTARIZE_PASS-}" ]; then
+	echo Notarizing TurboVNC-[0-9]*.dmg ...
+	xcrun notarytool submit TurboVNC-[0-9]*.dmg --apple-id $MACOS_NOTARIZE_ID \
+		--team-id $MACOS_NOTARIZE_TEAM_ID --password $MACOS_NOTARIZE_PASS --wait
+	xcrun stapler staple TurboVNC-[0-9]*.dmg
+fi
 mv TurboVNC-[0-9]*.dmg $OUTDIR/files/
 popd
 
@@ -33,6 +44,13 @@ mkdir macos
 pushd macos
 $SCRIPTDIR/setupscripts/macosx8664
 make dmg
+if [ -n "${MACOS_NOTARIZE_ID-}" -a -n "${MACOS_NOTARIZE_TEAM_ID-}" -a \
+	-n "${MACOS_NOTARIZE_PASS-}" ]; then
+	echo Notarizing TurboVNC-[0-9]*.dmg ...
+	xcrun notarytool submit TurboVNC-[0-9]*.dmg --apple-id $MACOS_NOTARIZE_ID \
+		--team-id $MACOS_NOTARIZE_TEAM_ID --password $MACOS_NOTARIZE_PASS --wait
+	xcrun stapler staple TurboVNC-[0-9]*.dmg
+fi
 mv TurboVNC-[0-9]*.dmg $OUTDIR/files/
 popd
 
