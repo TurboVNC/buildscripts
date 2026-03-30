@@ -14,5 +14,4 @@ cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 	-DCMAKE_C_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/gcc \
 	-DCMAKE_JAVA_COMPILE_FLAGS='-target 16 -source 16 -Xlint:all,-serial,-unchecked,-rawtypes' \
 	-DTVNC_INCLUDEJRE=1 -DCMAKE_INSTALL_SYSCONFDIR=/etc \
-	-DPYTHON_EXECUTABLE=/usr/bin/python2 \
 	.. ${1+"$@"}
