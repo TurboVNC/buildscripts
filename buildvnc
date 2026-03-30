@@ -224,7 +224,7 @@ if [ $NOSRC = 0 ]; then
 		fi
 		export PATH=$JAVA_HOME/bin:$PATH
 		cmake -G"Unix Makefiles" -DCMAKE_INSTALL_SYSCONFDIR=/etc \
-			-DPYTHON_EXECUTABLE=/usr/bin/python2 -DCMAKE_BUILD_TYPE=RelWithDebInfo .
+			-DCMAKE_BUILD_TYPE=RelWithDebInfo .
 		make dist
 	fi
 	popd
