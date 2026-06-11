@@ -28,11 +28,25 @@ pushd win64
 $SCRIPTDIR/setupscripts/win64
 ninja installer
 ninja
-mv TurboVNC-[0-9]*.exe $OUTDIR/files/
+mv TurboVNC-[0-9]*-x64.exe $OUTDIR/files/
 if [ -f $SCRIPTDIR/mssign ]; then
 	. $SCRIPTDIR/mssign
-	signtool sign -f "$MS_KEY_FILE" -t "$MS_TSA_URL" -p "$MS_KEY_PASS" $OUTDIR/files/TurboVNC-[0-9]*.exe
-	signtool verify -pa $OUTDIR/files/TurboVNC-[0-9]*.exe
+	signtool sign -f "$MS_KEY_FILE" -t "$MS_TSA_URL" -p "$MS_KEY_PASS" $OUTDIR/files/TurboVNC-[0-9]*-x64.exe
+	signtool verify -pa $OUTDIR/files/TurboVNC-[0-9]*-x64.exe
+fi
+popd
+
+. $SCRIPTDIR/vcarm64
+mkdir win64.arm
+pushd win64.arm
+$SCRIPTDIR/setupscripts/win64.arm
+ninja installer
+ninja
+mv TurboVNC-[0-9]*-arm64.exe $OUTDIR/files/
+if [ -f $SCRIPTDIR/mssign ]; then
+	. $SCRIPTDIR/mssign
+	signtool sign -f "$MS_KEY_FILE" -t "$MS_TSA_URL" -p "$MS_KEY_PASS" $OUTDIR/files/TurboVNC-[0-9]*-arm64.exe
+	signtool verify -pa $OUTDIR/files/TurboVNC-[0-9]*-arm64.exe
 fi
 popd
 
