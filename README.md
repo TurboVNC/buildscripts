@@ -53,9 +53,7 @@ containing the Visual C++ and Windows SDK header files should be listed in the
 the `vcvars64.bat` script provided by Visual C++, as described in the
 TurboVNC build instructions.
 
-The official TurboVNC binaries are generated using
-[Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com), but
-any reasonably modern version of Visual C++ and the Windows SDK should work.
+Any reasonably modern version of Visual C++ and the Windows SDK should work.
 
 Install all other software necessary to build a 32-bit and a 64-bit version of
 TurboVNC (both 32-bit and 64-bit libjpeg-turbo SDKs for Visual C++ should be
