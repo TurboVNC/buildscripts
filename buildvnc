@@ -224,6 +224,7 @@ if [ $NOSRC = 0 ]; then
 		fi
 		export PATH=$JAVA_HOME/bin:$PATH
 		cmake -G"Unix Makefiles" -DCMAKE_INSTALL_SYSCONFDIR=/etc \
+			-DCMAKE_INSTALL_UNITDIR=/usr/lib/systemd/system \
 			-DCMAKE_BUILD_TYPE=RelWithDebInfo .
 		make dist
 	fi
