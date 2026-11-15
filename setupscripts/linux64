@@ -15,4 +15,6 @@ cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 	-DCMAKE_JAVA_COMPILE_FLAGS='-target 16 -source 16 -Xlint:all,-serial,-unchecked,-rawtypes' \
 	-DTVNC_INCLUDEJRE=1 -DCMAKE_INSTALL_SYSCONFDIR=/etc \
 	-DCMAKE_INSTALL_UNITDIR=/usr/lib/systemd/system \
+	-DCMAKE_PREFIX_PATH=/opt/libjpeg-turbo/lib64/cmake \
+	-DTURBOJPEG_STATIC=1 \
 	.. ${1+"$@"}

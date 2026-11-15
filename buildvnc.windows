@@ -17,6 +17,8 @@ fi
 
 exec 2>&1
 
+. $SCRIPTDIR/libjpeg-turbo-version
+
 $SCRIPTDIR/openjdk.install
 export JAVA_HOME=/opt/openjdk21
 export PATH=/opt/openjdk21/bin:$PATH
@@ -25,7 +27,10 @@ pushd turbovnc-[0-9]*
 
 mkdir win64
 pushd win64
-$SCRIPTDIR/setupscripts/win64
+$SCRIPTDIR/setupscripts/win64 \
+	-DTURBOJPEG_VERSION=$LIBJPEG_TURBO_VERSION \
+	-DTURBOJPEG_EXACT=1 \
+	-DTURBOJPEG_PATH=c:/libjpeg-turbo64/lib/cmake
 ninja installer
 ninja
 mv TurboVNC-[0-9]*-x64.exe $OUTDIR/files/
@@ -39,7 +44,10 @@ popd
 . $SCRIPTDIR/vcarm64
 mkdir win64.arm
 pushd win64.arm
-$SCRIPTDIR/setupscripts/win64.arm
+$SCRIPTDIR/setupscripts/win64.arm \
+	-DTURBOJPEG_VERSION=$LIBJPEG_TURBO_VERSION \
+	-DTURBOJPEG_EXACT=1 \
+	-DTURBOJPEG_PATH=c:/libjpeg-turbo-arm64/lib/cmake
 ninja installer
 ninja
 mv TurboVNC-[0-9]*-arm64.exe $OUTDIR/files/

@@ -212,8 +212,13 @@ if [ $NOSRC = 0 ]; then
 		echo Could not parse version from CMakeLists.txt!
 		exit 1
 	fi
+	. $SCRIPTDIR/libjpeg-turbo-version
 	if [ "$PLATFORM" = "windows" ]; then
-		CC=cl cmake -G"Ninja" -DCMAKE_BUILD_TYPE=RelWithDebInfo .
+		CC=cl cmake -G"Ninja" -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+			-DTURBOJPEG_VERSION=$LIBJPEG_TURBO_VERSION \
+			-DTURBOJPEG_EXACT=1 \
+			-DTURBOJPEG_PATH=c:/libjpeg-turbo64/lib/cmake \
+			-DTURBOJPEG_STATIC=1 .
 		ninja dist
 	else
 		$SCRIPTDIR/openjdk.install
@@ -225,7 +230,11 @@ if [ $NOSRC = 0 ]; then
 		export PATH=$JAVA_HOME/bin:$PATH
 		cmake -G"Unix Makefiles" -DCMAKE_INSTALL_SYSCONFDIR=/etc \
 			-DCMAKE_INSTALL_UNITDIR=/usr/lib/systemd/system \
-			-DCMAKE_BUILD_TYPE=RelWithDebInfo .
+			-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+			-DTURBOJPEG_VERSION=$LIBJPEG_TURBO_VERSION \
+			-DTURBOJPEG_EXACT=1 \
+			-DTURBOJPEG_PATH=/opt/libjpeg-turbo/lib64/cmake \
+			-DTURBOJPEG_STATIC=1 .
 		make dist
 	fi
 	popd

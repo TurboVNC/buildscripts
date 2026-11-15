@@ -20,6 +20,8 @@ fi
 
 exec 2>&1
 
+. $SCRIPTDIR/libjpeg-turbo-version
+
 $SCRIPTDIR/openjdk.install
 export JAVA_HOME=/opt/openjdk21
 export PATH=/opt/openjdk21/bin:$PATH
@@ -36,7 +38,12 @@ export JAVAFLAGS='-target 16 -source 16 -Xlint:all,-serial,-unchecked,-rawtypes'
 export LDFLAGS=
 CC=/opt/rh/devtoolset-9/root/usr/bin/gcc \
 rpmbuild --rebuild --buildroot $TMPDIR/rpmbuild/buildroot --define "jre 1" \
-	--define "_topdir $TMPDIR/rpmbuild" $OUTDIR/files/turbovnc-[0-9]*.src.rpm
+	--define "_topdir $TMPDIR/rpmbuild" \
+	--define "turbojpeg_version $LIBJPEG_TURBO_VERSION" \
+	--define "turbojpeg_exact 1" \
+	--define "turbojpeg_path /opt/libjpeg-turbo/lib64/cmake" \
+	--define "turbojpeg_static 1" \
+	$OUTDIR/files/turbovnc-[0-9]*.src.rpm
 VERSION=`rpm -q -p rpmbuild/RPMS/x86_64/turbovnc-[0-9]*.x86_64.rpm | cut -f2 -d-`
 mv rpmbuild/RPMS/x86_64/turbovnc-[0-9]*.x86_64.rpm $OUTDIR/files/turbovnc-$VERSION.x86_64.rpm
 mv rpmbuild/RPMS/x86_64/turbovnc-debuginfo-[0-9]*.x86_64.rpm $OUTDIR/files/turbovnc-debuginfo-$VERSION.x86_64.rpm
@@ -58,7 +65,10 @@ pushd linux64
 export CFLAGS=
 export LDFLAGS=
 export JAVA_HOME=/opt/openjdk21
-$SCRIPTDIR/setupscripts/linux64
+$SCRIPTDIR/setupscripts/linux64 \
+	-DTURBOJPEG_VERSION=$LIBJPEG_TURBO_VERSION \
+	-DTURBOJPEG_EXACT=1 \
+	-DTURBOJPEG_PATH=/opt/libjpeg-turbo/lib64/cmake
 export NUMCPUS=`grep -c '^processor' /proc/cpuinfo`
 make -j$NUMCPUS --load-average=$NUMCPUS
 make deb
@@ -73,7 +83,10 @@ echo Creating AArch64 binary RPM and DEB ...
 
 mkdir linux64.arm
 pushd linux64.arm
-$SCRIPTDIR/setupscripts/linux64.arm
+$SCRIPTDIR/setupscripts/linux64.arm \
+	-DTURBOJPEG_VERSION=$LIBJPEG_TURBO_VERSION \
+	-DTURBOJPEG_EXACT=1 \
+	-DTURBOJPEG_PATH=/opt/arm64/opt/libjpeg-turbo/lib64/cmake
 make -j$NUMCPUS --load-average=$NUMCPUS
 STRIP=/opt/gcc.arm64/bin/aarch64-none-linux-gnu-strip make rpm
 VERSION=`rpm -q -p turbovnc-[0-9]*.aarch64.rpm | cut -f2 -d-`

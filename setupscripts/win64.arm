@@ -16,8 +16,8 @@ CC=cl cmake -G"Ninja" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 	-DCMAKE_JAVA_COMPILE_FLAGS='-target 16 -source 16 -Xlint:all,-serial,-unchecked,-rawtypes' \
 	-DTVNC_INCLUDEJRE=1 \
 	-DCMAKE_TOOLCHAIN_FILE=win64-arm-toolchain.cmake \
-	-DTJPEG_INCLUDE_DIR=c:/libjpeg-turbo-arm64/include \
-	-DTJPEG_LIBRARY=c:/libjpeg-turbo-arm64/lib/turbojpeg-static.lib \
+	-DCMAKE_PREFIX_PATH=c:/libjpeg-turbo-arm64/lib/cmake \
+	-DTURBOJPEG_STATIC=1 \
 	-DTVNC_JDK_MODULE_PATH=/opt/openjdk21.arm64/jmods \
 	-DJAVA_AWT_INCLUDE_PATH=/opt/openjdk21.arm64/include \
 	-DJAVA_AWT_LIBRARY=/opt/openjdk21.arm64/lib/jawt.lib \

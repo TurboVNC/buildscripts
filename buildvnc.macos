@@ -17,6 +17,8 @@ fi
 
 exec 2>&1
 
+. $SCRIPTDIR/libjpeg-turbo-version
+
 $SCRIPTDIR/openjdk.install
 
 export LD_LIBRARY_PATH=
@@ -28,7 +30,10 @@ fi
 
 mkdir macosarm64
 pushd macosarm64
-$SCRIPTDIR/setupscripts/macosarm64
+$SCRIPTDIR/setupscripts/macosarm64 \
+	-DTURBOJPEG_VERSION=$LIBJPEG_TURBO_VERSION \
+	-DTURBOJPEG_EXACT=1 \
+	-DTURBOJPEG_PATH=/opt/libjpeg-turbo/lib/cmake
 make dmg
 if [ -n "${MACOS_NOTARIZE_ID-}" -a -n "${MACOS_NOTARIZE_TEAM_ID-}" -a \
 	-n "${MACOS_NOTARIZE_PASS-}" ]; then
@@ -42,7 +47,10 @@ popd
 
 mkdir macos
 pushd macos
-$SCRIPTDIR/setupscripts/macosx8664
+$SCRIPTDIR/setupscripts/macosx8664 \
+	-DTURBOJPEG_VERSION=$LIBJPEG_TURBO_VERSION \
+	-DTURBOJPEG_EXACT=1 \
+	-DTURBOJPEG_PATH=/opt/libjpeg-turbo/lib/cmake
 make dmg
 if [ -n "${MACOS_NOTARIZE_ID-}" -a -n "${MACOS_NOTARIZE_TEAM_ID-}" -a \
 	-n "${MACOS_NOTARIZE_PASS-}" ]; then

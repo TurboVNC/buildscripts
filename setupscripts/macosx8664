@@ -24,4 +24,7 @@ cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 	-DCMAKE_JAVA_COMPILE_FLAGS='-target 16 -source 16 -Xlint:all,-serial,-unchecked,-rawtypes' \
 	-DCMAKE_OSX_ARCHITECTURES="x86_64" \
 	-DCMAKE_OSX_DEPLOYMENT_TARGET=10.7 -DCMAKE_OSX_SYSROOT=$MACOS_SYSROOT \
-	-DTVNC_INCLUDEJRE=1 "${CMAKEARGS[@]}" .. ${1+"$@"}
+	-DTVNC_INCLUDEJRE=1 \
+	-DCMAKE_PREFIX_PATH=/opt/libjpeg-turbo/lib/cmake \
+	-DTURBOJPEG_STATIC=1 \
+	"${CMAKEARGS[@]}" .. ${1+"$@"}

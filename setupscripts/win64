@@ -9,4 +9,7 @@ export JAVA_HOME=/opt/openjdk21.x64
 
 CC=cl cmake -G"Ninja" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 	-DCMAKE_JAVA_COMPILE_FLAGS='-target 16 -source 16 -Xlint:all,-serial,-unchecked,-rawtypes' \
-	-DTVNC_INCLUDEJRE=1 .. ${1+"$@"}
+	-DTVNC_INCLUDEJRE=1 \
+	-DCMAKE_PREFIX_PATH=c:/libjpeg-turbo64/lib/cmake \
+	-DTURBOJPEG_STATIC=1 \
+	.. ${1+"$@"}

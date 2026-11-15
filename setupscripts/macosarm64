@@ -26,6 +26,8 @@ cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 	-DCMAKE_OSX_DEPLOYMENT_TARGET=11 -DCMAKE_OSX_SYSROOT=$MACOS_SYSROOT \
 	-DCMAKE_JAVA_COMPILE_FLAGS='-target 16 -source 16 -Xlint:all,-serial,-unchecked,-rawtypes' \
 	-DTVNC_INCLUDEJRE=1 \
+	-DCMAKE_PREFIX_PATH=/opt/libjpeg-turbo/lib/cmake \
+	-DTURBOJPEG_STATIC=1 \
 	-DTVNC_JDK_MODULE_PATH=/opt/openjdk21.arm64/Contents/Home/jmods \
 	-DJAVA_AWT_INCLUDE_PATH=/opt/openjdk21.arm64/Contents/Home/include \
 	-DJAVA_AWT_LIBRARY=/opt/openjdk21.arm64/Contents/Home/lib/libjawt.dylib \
