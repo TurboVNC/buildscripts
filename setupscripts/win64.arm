@@ -13,7 +13,7 @@ EOF
 export JAVA_HOME=/opt/openjdk21.x64
 
 CC=cl cmake -G"Ninja" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
-	-DCMAKE_JAVA_COMPILE_FLAGS='-target 16 -source 16 -Xlint:all,-serial,-unchecked,-rawtypes' \
+	-DCMAKE_JAVA_COMPILE_FLAGS='-target 16 -source 16 -Xlint:all,-serial' \
 	-DTVNC_INCLUDEJRE=1 \
 	-DCMAKE_TOOLCHAIN_FILE=win64-arm-toolchain.cmake \
 	-DCMAKE_PREFIX_PATH=c:/libjpeg-turbo-arm64/lib/cmake \
