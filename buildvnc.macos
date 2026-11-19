@@ -29,7 +29,7 @@ fi
 mkdir macosarm64
 pushd macosarm64
 $SCRIPTDIR/setupscripts/macosarm64
-make dmg
+ninja dmg
 if [ -n "${MACOS_NOTARIZE_ID-}" -a -n "${MACOS_NOTARIZE_TEAM_ID-}" -a \
 	-n "${MACOS_NOTARIZE_PASS-}" ]; then
 	echo Notarizing TurboVNC-[0-9]*.dmg ...
@@ -43,7 +43,7 @@ popd
 mkdir macos
 pushd macos
 $SCRIPTDIR/setupscripts/macosx8664
-make dmg
+ninja dmg
 if [ -n "${MACOS_NOTARIZE_ID-}" -a -n "${MACOS_NOTARIZE_TEAM_ID-}" -a \
 	-n "${MACOS_NOTARIZE_PASS-}" ]; then
 	echo Notarizing TurboVNC-[0-9]*.dmg ...
