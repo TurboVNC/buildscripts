@@ -34,7 +34,7 @@ $SCRIPTDIR/setupscripts/macosarm64 \
 	-DTURBOJPEG_VERSION=$LIBJPEG_TURBO_VERSION \
 	-DTURBOJPEG_EXACT=1 \
 	-DTURBOJPEG_PATH=/opt/libjpeg-turbo/lib/cmake
-make dmg
+ninja dmg
 if [ -n "${MACOS_NOTARIZE_ID-}" -a -n "${MACOS_NOTARIZE_TEAM_ID-}" -a \
 	-n "${MACOS_NOTARIZE_PASS-}" ]; then
 	echo Notarizing TurboVNC-[0-9]*.dmg ...
@@ -51,7 +51,7 @@ $SCRIPTDIR/setupscripts/macosx8664 \
 	-DTURBOJPEG_VERSION=$LIBJPEG_TURBO_VERSION \
 	-DTURBOJPEG_EXACT=1 \
 	-DTURBOJPEG_PATH=/opt/libjpeg-turbo/lib/cmake
-make dmg
+ninja dmg
 if [ -n "${MACOS_NOTARIZE_ID-}" -a -n "${MACOS_NOTARIZE_TEAM_ID-}" -a \
 	-n "${MACOS_NOTARIZE_PASS-}" ]; then
 	echo Notarizing TurboVNC-[0-9]*.dmg ...

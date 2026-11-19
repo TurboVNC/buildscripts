@@ -69,9 +69,8 @@ $SCRIPTDIR/setupscripts/linux64 \
 	-DTURBOJPEG_VERSION=$LIBJPEG_TURBO_VERSION \
 	-DTURBOJPEG_EXACT=1 \
 	-DTURBOJPEG_PATH=/opt/libjpeg-turbo/lib64/cmake
-export NUMCPUS=`grep -c '^processor' /proc/cpuinfo`
-make -j$NUMCPUS --load-average=$NUMCPUS
-make deb
+ninja
+ninja deb
 mv turbovnc_[0-9]*_amd64.deb $OUTDIR/files/
 if [ -f $SCRIPTDIR/gpgsign ]; then
 	. $SCRIPTDIR/gpgsign
@@ -87,15 +86,15 @@ $SCRIPTDIR/setupscripts/linux64.arm \
 	-DTURBOJPEG_VERSION=$LIBJPEG_TURBO_VERSION \
 	-DTURBOJPEG_EXACT=1 \
 	-DTURBOJPEG_PATH=/opt/arm64/opt/libjpeg-turbo/lib64/cmake
-make -j$NUMCPUS --load-average=$NUMCPUS
-STRIP=/opt/gcc.arm64/bin/aarch64-none-linux-gnu-strip make rpm
+ninja
+STRIP=/opt/gcc.arm64/bin/aarch64-none-linux-gnu-strip ninja rpm
 VERSION=`rpm -q -p turbovnc-[0-9]*.aarch64.rpm | cut -f2 -d-`
 mv turbovnc-[0-9]*.aarch64.rpm $OUTDIR/files/turbovnc-$VERSION.aarch64.rpm
 if [ -f $SCRIPTDIR/gpgsign ]; then
 	$SCRIPTDIR/rpmsign $OUTDIR/files/turbovnc-$VERSION.aarch64.rpm
 	rpm --checksig -v $OUTDIR/files/turbovnc-$VERSION.aarch64.rpm
 fi
-make deb
+ninja deb
 mv turbovnc_[0-9]*_arm64.deb $OUTDIR/files/
 if [ -f $SCRIPTDIR/gpgsign ]; then
 	expect $SCRIPTDIR/debsign "$GPG_KEY_PASS" "$GPG_KEY_ID" $OUTDIR/files/turbovnc_[0-9]*_arm64.deb

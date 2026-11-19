@@ -19,7 +19,7 @@ export JAVA_HOME=/opt/openjdk21/Contents/Home
 
 . $SCRIPTDIR/macvars
 
-cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
+cmake -G"Ninja" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 	-DCMAKE_C_COMPILER=$MACOS_PLATFORMDIR/usr/bin/gcc \
 	-DCMAKE_OBJC_FLAGS="-mmacosx-version-min=11.0 -Wall" \
 	-DCMAKE_OSX_ARCHITECTURES="arm64" \
