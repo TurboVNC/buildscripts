@@ -13,6 +13,7 @@ export JAVA_HOME=/opt/openjdk21
 cmake -G"Ninja" -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 	-DCMAKE_C_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/gcc \
 	-DCMAKE_JAVA_COMPILE_FLAGS='-target 16 -source 16 -Xlint:all,-serial' \
+	-DCMAKE_INSTALL_JAVADIR=/opt/TurboVNC/java \
 	-DTVNC_INCLUDEJRE=1 -DCMAKE_INSTALL_SYSCONFDIR=/etc \
 	-DCMAKE_INSTALL_UNITDIR=/usr/lib/systemd/system \
 	-DCMAKE_PREFIX_PATH=/opt/libjpeg-turbo/lib64/cmake \
